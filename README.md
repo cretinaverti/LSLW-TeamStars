@@ -1,6 +1,9 @@
 LSLW-TeamStars
 ==============
 
-#### Bon, ça marche, je m'occupe des fonctions du protocole
-
-Titouan :)
+#### Titouan
+### Fait :
+- le state
+### a faire
+- le init
+- le order

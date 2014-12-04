@@ -25,7 +25,7 @@ class Planete():
 		self.nb_def = defs
 		
 
-
+        #Permet d'afficher une planète
 	def __repr__(self):
 	  s = "Planete "+str(self.identifiant)+"\n"
 	  s += "Proprio : "+str(self.proprietaire)+"\n"
@@ -38,14 +38,16 @@ class Arete():
 	def __init__(self, distance):
 		self.flotte_traverse = []
 		self.distance = distance
+		self.extremites = None
 
 
 class Flotte():
 	"""docstring for Flotte"""
 	def __init__(self, nb_unite, couleur, direction):	
-		self.nb_unite = nb_unites
+		self.nb_unite = nb_unite
 		self.couleur = couleur
-		self.destination = destination
+		self.destination = direction
+		self.distance = 0
 
 		self.position_courante = 0
 		
