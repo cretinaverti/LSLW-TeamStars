@@ -1,5 +1,6 @@
 LSLW-TeamStars
 ==============
-bukuybhg
 
-#### YOLO !!!!
+#### Bon, ça marche, je m'occupe des fonctions du protocole
+
+Titouan :)
