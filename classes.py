@@ -10,18 +10,28 @@ class Carte(object):
 
 		
 
-class Planete(Carte):
+class Planete():
 	"""docstring for Cellule"""
-	def __init__(self, unit_max_off, unit_max_def, propietaire = None, liste_adj = []):
-		self.proprietaire = proprietaire
+	def __init__(self, ide, unit_max_off, unit_max_def, offs, defs, proprio):
+		self.identifiant = ide
+		self.proprietaire = proprio
 		self.unit_max_off = unit_max_off
 		self.unit_max_def = unit_max_def
-		self.liste_voisins = liste_voisins
+		self.liste_voisins = []
 		# [(Arete, Planete), ...]
 
-		self.cadence_prod = cadence_prod
-		self.nb_off = 0
-		self.nb_def = 0
+		self.cadence_prod = 0
+		self.nb_off = offs
+		self.nb_def = defs
+		
+
+
+	def __repr__(self):
+	  s = "Planete "+str(self.identifiant)+"\n"
+	  s += "Proprio : "+str(self.proprietaire)+"\n"
+	  s += "offs : "+str(self.nb_off)+"\n"
+	  s += "defs : "+str(self.nb_def)+"\n"
+	  return s
 
 class Arete():
 	"""docstring for Arete"""
@@ -40,5 +50,3 @@ class Flotte():
 		self.position_courante = 0
 		
 		
-
-	
