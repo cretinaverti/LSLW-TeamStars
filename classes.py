@@ -1,9 +1,12 @@
 class Carte(object):
 	"""docstring for Carte"""
-	def __init__(self, nb_joueur, planetes = []):
-		self.planetes = planetes
+	def __init__(self, nb_joueur, planetes = [], aretes = []):
+		self.liste_planetes = planetes
+		self.liste_aretes = aretes
+		self.liste_joueurs = liste_joueurs
 
-		self.nb_joueur = nb_joueur
+		# Liste d'aretes:
+		# 	matrice d'Aretes
 
 		
 
@@ -13,7 +16,8 @@ class Planete(Carte):
 		self.proprietaire = proprietaire
 		self.unit_max_off = unit_max_off
 		self.unit_max_def = unit_max_def
-		self.liste_adj = liste_adj
+		self.liste_voisins = liste_voisins
+		# [(Arete, Planete), ...]
 
 		self.cadence_prod = cadence_prod
 		self.nb_off = 0
@@ -29,10 +33,12 @@ class Arete():
 class Flotte():
 	"""docstring for Flotte"""
 	def __init__(self, nb_unite, couleur, direction):	
-		self.nb_unite = nb_unite
+		self.nb_unite = nb_unites
 		self.couleur = couleur
-		self.direction = direction
+		self.destination = destination
 
 		self.position_courante = 0
 		
 		
+
+	
