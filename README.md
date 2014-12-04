@@ -1,11 +1,11 @@
 LSLW-TeamStars
 ==============
 
-#### Titouan
+## Titouan
 
-### Fait :
+#### Fait :
 - le state
 
-### a faire
+#### a faire
 - le init
 - le order
