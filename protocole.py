@@ -1,8 +1,10 @@
 import re
 from classes import *
 
-#m = re.match(r"(\w+)","ma maman est chez moi")
-#print(m.group(1))
+
+##########
+# Décortiquer le state
+##########
 
 
 #id du match
@@ -38,7 +40,6 @@ def getMoves(state):
     tab = [] #contiendra les aretes à la fin
     m = re.match(".*MOVES:(.*)",state).group(1)
     tabAretes = re.split(",",m)
-    print(tabAretes)
     for areteS in tabAretes:#la on a une chaine contenant les mouvements sur une arete
         arete = Arete(0)
         arete.extremites = (int(re.match("\d+",areteS).group(0)),int(re.match(".*'(\d)+",areteS).group(1)))
@@ -59,5 +60,15 @@ def getMoves(state):
 
 
 state = "STATE20ac18ab-6d18-450e-94af-bee53fdc8fcaIS2;3CELLS:1[2]12'4,2[2]15'2,3[1]33'6;4MOVES:1<5[2]@232'>6[2]@488'>3[1]@4330'2,1<10[1]@2241'3"
+
+#################
+# Envoyer un order
+#################
+
+# Retourne une chaine de caractère conforme au protocole ORDER
+def toOrderMsg(notre_id,pourcentage,cellule_depart,cible):
+    return "["+str(notre_id)+"]MOV"+str(pourcentage)+"FROM"+cellule_depart+"TO"+cible
+
+
 
 print(getMoves(state))

@@ -1,10 +1,10 @@
 class Carte(object):
 	"""docstring for Carte"""
-	def __init__(self, nb_joueur, planetes = [], aretes = []):
+	def __init__(self, nb_joueur, planetes = [], aretes = [], id_joueur):
 		self.liste_planetes = planetes
 		self.liste_aretes = aretes
 		self.liste_joueurs = liste_joueurs
-
+                self.id_joeur = id_joueur
 		# Liste d'aretes:
 		# 	matrice d'Aretes
 
