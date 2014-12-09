@@ -1,16 +1,16 @@
-class Carte(object):
+class Carte:
 	"""docstring for Carte"""
-	def __init__(self, nb_joueur, planetes = [], aretes = [], id_joueur):
-		self.liste_planetes = planetes
-		self.liste_aretes = aretes
-		self.liste_joueurs = liste_joueurs
-                self.id_joeur = id_joueur
+	def __init__(self, nb_joueur, id_joueur):
+                self.liste_planetes = []
+                self.liste_aretes = []
+                self.liste_joueurs = []
+                self.id_joueur = id_joueur
 		# Liste d'aretes:
 		# 	matrice d'Aretes
 
 		
 
-class Planete():
+class Planete:
 	"""docstring for Cellule"""
 	def __init__(self, ide, unit_max_off, unit_max_def, offs, defs, proprio):
 		self.identifiant = ide
@@ -33,7 +33,7 @@ class Planete():
 	  s += "defs : "+str(self.nb_def)+"\n"
 	  return s
 
-class Arete():
+class Arete:
 	"""docstring for Arete"""
 	def __init__(self, distance):
 		self.flotte_traverse = []
@@ -41,7 +41,7 @@ class Arete():
 		self.extremites = None
 
 
-class Flotte():
+class Flotte:
 	"""docstring for Flotte"""
 	def __init__(self, nb_unite, couleur, direction):	
 		self.nb_unite = nb_unite

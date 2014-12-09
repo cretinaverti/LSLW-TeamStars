@@ -2,7 +2,7 @@ import socket
 import re
 
 hote = "localhost"
-port = 12882
+port = 12887
 
 conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 conn.connect((hote, port))
@@ -30,8 +30,21 @@ param = re.match(".*\((.*)[,)]",msg).group(1)
 if(fonc != "register_pooo"):
     raise Exception("le message n'est pas un appel de register_pooo")
 
+# appel : register_pooo(param)
+print(str(fonc)+"("+str(param)+")")
 
 
+print("on passe au init")
+### Commande init_pooo(init_string)
+
+msg = conn.recv(1024).decode('UTF-8')
+#on décortique le message reçu
+fonc = re.match("(.*)\(",msg).group(1)
+param = re.match(".*\((.*)[,)]",msg).group(1)
+
+# le deuxième message doit être init_pooo
+if(fonc != "init_pooo"):
+    raise Exception("le message n'est pas un appel de init_pooo")
 
 print(str(fonc)+"("+str(param)+")")
 

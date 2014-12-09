@@ -1,7 +1,8 @@
 import socket
+import time
 
 hote = ''
-port = 12882
+port = 12887
 
 conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 conn.bind((hote, port))
@@ -18,6 +19,10 @@ conn, infos_connexion = conn.accept()
 
 
 conn.send(b"register_pooo(0947e717-02a1-4d83-9470-a941b6e8ed07)")
+
+time.sleep(1)
+
+conn.send(b"init_pooo(salut)")
 
 
 conn.close()
