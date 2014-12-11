@@ -1,11 +1,10 @@
-LSLW-TeamStars
+﻿LSLW-TeamStars
 ==============
 
-## Titouan
+## Titouan :
+je fais le système de gestion des state avec le serveur.
 
-#### Fait :
-- le state
+## Stratégies :
+ voir les staratégies [>>> ici <<<<](https://github.com/cretinaverti/LSLW-TeamStars/wiki/Strat%C3%A9gies):
 
-#### a faire
-- le init
-- le order
+yolo
