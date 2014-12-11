@@ -5,6 +5,7 @@ class Carte:
                 self.liste_aretes = []
                 self.liste_joueurs = []
                 self.id_joueur = id_joueur
+                self.nb_joueur = nb_joueur
 		# Liste d'aretes:
 		# 	matrice d'Aretes
 
@@ -12,7 +13,7 @@ class Carte:
 
 class Planete:
 	"""docstring for Cellule"""
-	def __init__(self, ide, unit_max_off, unit_max_def, offs, defs, proprio):
+	def __init__(self, ide, unit_max_off, unit_max_def, offs, defs, proprio, cadence_prod):
 		self.identifiant = ide
 		self.proprietaire = proprio
 		self.unit_max_off = unit_max_off
@@ -20,7 +21,7 @@ class Planete:
 		self.liste_voisins = []
 		# [(Arete, Planete), ...]
 
-		self.cadence_prod = 0
+		self.cadence_prod = cadence_prod
 		self.nb_off = offs
 		self.nb_def = defs
 		
@@ -35,7 +36,8 @@ class Planete:
 
 class Arete:
 	"""docstring for Arete"""
-	def __init__(self, distance):
+	def __init__(self, distance, ide = None):
+		self.ide = ide
 		self.flotte_traverse = []
 		self.distance = distance
 		self.extremites = None
