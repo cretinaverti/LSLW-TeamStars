@@ -9,6 +9,16 @@ class Carte:
 		# Liste d'aretes:
 		# 	matrice d'Aretes
 
+
+	def extremites(self):
+		extremites = []
+
+		for planete in liste_planetes:
+			if len(planete.liste_voisins) == 1:
+				extremites.append(planete)
+		return extremites
+
+
 		
 
 class Planete:
@@ -26,13 +36,26 @@ class Planete:
 		self.nb_def = defs
 		
 
-        #Permet d'afficher une planète
+    # Permet d'afficher une planète
 	def __repr__(self):
 	  s = "Planete "+str(self.identifiant)+"\n"
 	  s += "Proprio : "+str(self.proprietaire)+"\n"
 	  s += "offs : "+str(self.nb_off)+"\n"
 	  s += "defs : "+str(self.nb_def)+"\n"
 	  return s
+
+
+	# Sert à la méthode sort(); pour comparer les planetes entre eux, 
+	# et donc à trier les planètes suivnt ses critères... 
+	def __lt__(self, other):
+	  	return self.nb_def < other.nb_def
+
+	def __gt__(self, other):
+		return self.nb_def > other.nb_def
+
+	def __eq__(self, other):
+		return self.nb_def == other.nb_def
+
 
 class Arete:
 	"""docstring for Arete"""
