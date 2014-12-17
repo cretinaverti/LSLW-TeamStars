@@ -1,5 +1,6 @@
 import socket
 import re
+import initialisation
 
 hote = "localhost"
 port = 12888
@@ -36,7 +37,7 @@ if(fonc != "register_pooo"):
     raise Exception("le message n'est pas un appel de register_pooo")
 
 # appel : register_pooo(param)
-print(str(fonc)+"("+str(param)+")")
+initialisation.register_pooo(param)
 
 ############
 ### Commande init_pooo(init_string)
@@ -54,7 +55,7 @@ if(protocole != "INIT"):
     raise Exception("le message n'est pas un appel de init_pooo")
 
 
-print("INIT !")
+initialisation.register_pooo(msg)
 
 ############
 ### Commande play_pooo()
@@ -65,6 +66,6 @@ msg = conn.recv(1024).decode('UTF-8')
 if(msg != "play"):
     raise Exception("le message n'est pas un appel de play_pooo")
 
-print("PLAY !")
+initialisation.play_pooo()
 
 conn.close()
