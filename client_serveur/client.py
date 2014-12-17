@@ -2,7 +2,7 @@ import socket
 import re
 
 hote = "localhost"
-port = 12887
+port = 12888
 
 conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 conn.connect((hote, port))
@@ -21,6 +21,11 @@ print("Connection avec le serveur")
 # réception des commandes d'initialisation envoyées par le serveur
 #########################
 
+
+############
+# commande register_pooo
+############
+
 msg = conn.recv(1024).decode('UTF-8')
 #on décortique le message reçu
 fonc = re.match("(.*)\(",msg).group(1)
@@ -33,20 +38,33 @@ if(fonc != "register_pooo"):
 # appel : register_pooo(param)
 print(str(fonc)+"("+str(param)+")")
 
-
-print("on passe au init")
+############
 ### Commande init_pooo(init_string)
+############
 
 msg = conn.recv(1024).decode('UTF-8')
-#on décortique le message reçu
-fonc = re.match("(.*)\(",msg).group(1)
-param = re.match(".*\((.*)[,)]",msg).group(1)
+###on décortique le message reçu
+
+#fonc = re.match("(.*)\(",msg).group(1)
+#param = re.match(".*\((.*)[,)]",msg).group(1)
+protocole = re.match("([A-Z]+)",msg).group(1)
 
 # le deuxième message doit être init_pooo
-if(fonc != "init_pooo"):
+if(protocole != "INIT"):
     raise Exception("le message n'est pas un appel de init_pooo")
 
-print(str(fonc)+"("+str(param)+")")
 
+print("INIT !")
+
+############
+### Commande play_pooo()
+############
+
+msg = conn.recv(1024).decode('UTF-8')
+
+if(msg != "play"):
+    raise Exception("le message n'est pas un appel de play_pooo")
+
+print("PLAY !")
 
 conn.close()
