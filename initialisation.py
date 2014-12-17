@@ -55,5 +55,12 @@ for i in range(1, 8):
    carte.liste_aretes.append(Arete(1, i))
 
 
+# Début stratégie.
+for planete in carte.extremites:
+   if planete.proprio == None:
+      chaine_order = toOrderMsg(carte.id_joueur, 50, 0, planete)
 
+
+
+   
 
