@@ -6,8 +6,41 @@ class Carte:
                 self.liste_joueurs = []
                 self.id_joueur = id_joueur
                 self.nb_joueur = nb_joueur
+
+                self.dict = {}
 		# Liste d'aretes:
 		# 	matrice d'Aretes
+
+
+
+	def graphe_dictionnaire_generator(self):
+		liste_ide_planetes = []
+		liste_ide_voisins = []
+		liste_poids = []
+
+		for planete in self.liste_planetes:
+			liste_ide_planetes.append(planete.identifiant)
+			
+			_liste_ide_voisins = []
+			for voisin in planete.liste_voisins:
+				_liste_ide_voisins.append(voisin[1])
+				
+			liste_ide_voisins.append(_liste_ide_voisins)
+
+			_liste_poids = []
+			for voisin in planete.liste_voisins:
+				_liste_poids.append(voisin[0])
+
+			liste_poids.append(_liste_poids)
+		
+
+		l_dic_p = []
+		for i in range(len(liste_poids)):
+			l_dic_p.append( dict( zip(liste_ide_voisins[i], liste_poids[i]) ) )
+			
+
+		return dict( zip(liste_ide_planetes, l_dic_p) ) # Mettre "yield" si l'on veut un générateur (~ itérateur).
+
 
 
 	def extremites(self):
@@ -38,33 +71,52 @@ class Carte:
 
 		return mes_planetes
 
-	def plus_court_chemin(self, planete):
-		# On va utiliser l'algorithme de Bellman: on calcule la distance 
-		# minimale entre la planète en argument et toutes les autres planètes.
 
-		nb_planetes = len(self.liste_planetes)
 
-		# On initialise la table distance.
-		distance = [nb_planetes*[999999]]
-		predecesseurs = [nb_planetes*'-']
+	# Fonctions servant à implémenter l'agorithme de Dijskra.
+	def affiche_peres(self, pere, id_planete_A, extremite, trajet):
+	    """
+	    À partir du dictionnaire des pères de chaque sommet on renvoie
+	    la liste des sommets du plus court chemin trouvé. Calcul récursif.
+	    On part de la fin et on remonte vers le départ du chemin.
 
-		# Liste des planètes a traiter; liste des sommets atteints au fur et à mesure.
-		a_traiter = [planete] # Elle contient au tout début la planète entrée en argument.
+	    """
+	    if extremite == id_planete_A:
+	        return [id_planete_A] + trajet
+	    else:
+	        return self.affiche_peres(pere, id_planete_A, pere[extremite], [extremite] + trajet)
 
-		etape = 0
-		while etape <= nb_planetes:
-			liste_planetes_initiales = []
+	def dijskra(self, etape, id_planete_B, visites, distances, pere, id_planete_A):
+		
+		# On va utiliser l'algorithme de Dijskra: on calcule la distance 
+		# minimale entre la planète en argument et une autre planètes.
 
-			for planete in a_traiter:
-				liste_planetes_initiales.append(planete)
-			etape += 1
+		if etape == id_planete_B:
+			return distances[id_planete_B], self.affiche_peres(pere, id_planete_A, id_planete_B, [])
 
-			distance.append([])
-			predecesseurs.append([])
+		if len(visites) == 0:
+			distances[etape] = 0
 
-			for i in range(len(distance[etape - 1])):
-				pass
+		for voisin in self.dict[etape]:
+			if voisin not in visites:
+				dist_voisin = distances.get(voisin, float('inf'))
+				candidat_dist = distances[etape] + self.dict[etape][voisin]
 
+				if candidat_dist < dist_voisin:
+					distances[voisin] = candidat_dist
+					pere[voisin] = etape
+
+		visites.append(etape)
+		print(self.dict)
+		for s in self.dict:
+			print(s)
+		non_visites = dict((s, distances.get(s, float('inf'))) for s in self.dict if s not in visites)
+		noeud_plus_proche = min(non_visites, key = non_visites.get)
+
+		return self.dijskra(noeud_plus_proche, id_planete_B, visites, distances, pere, id_planete_A)
+
+	def plus_court_chemin(self, id_planete_A, id_planete_B):
+		return self.dijskra(id_planete_A, id_planete_B, [], {}, {}, id_planete_A)
 
 
 class Planete:
