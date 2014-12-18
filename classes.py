@@ -75,12 +75,7 @@ class Carte:
 
 	# Fonctions servant à implémenter l'agorithme de Dijskra.
 	def affiche_peres(self, pere, id_planete_A, extremite, trajet):
-	    """
-	    À partir du dictionnaire des pères de chaque sommet on renvoie
-	    la liste des sommets du plus court chemin trouvé. Calcul récursif.
-	    On part de la fin et on remonte vers le départ du chemin.
-
-	    """
+	    
 	    if extremite == id_planete_A:
 	        return [id_planete_A] + trajet
 	    else:
@@ -107,9 +102,7 @@ class Carte:
 					pere[voisin] = etape
 
 		visites.append(etape)
-		print(self.dict)
-		for s in self.dict:
-			print(s)
+		
 		non_visites = dict((s, distances.get(s, float('inf'))) for s in self.dict if s not in visites)
 		noeud_plus_proche = min(non_visites, key = non_visites.get)
 
