@@ -1,4 +1,4 @@
-def etude_planetes_isolees_proches(carte, ma_planete):
+def etude_planetes_isolees_proches(ma_planete):
     planetes_isolees=[]
     lg=len(ma_planete.liste_voisins)
     for i in range (0, lg):    
@@ -11,7 +11,7 @@ def etude_planetes_isolees_proches(carte, ma_planete):
 #autour de "ma_planete"
 #Nécessite une fonction d'attaque si on juge bon de conquérir
 
-def etude_planetes_proches_droite(carte, ma_planete):
+def etude_planetes_proches_droite(ma_planete):
     planetes_isolees=[]
     planetes_isolees_possibles=[]
     lg=len(ma_planete.liste_voisins)
@@ -57,4 +57,24 @@ def etude_planete_droite(ma_planete):
 #non-testée donc gros risque d'erreurs...
 #retourne 0 si la planete appartient à une demie-droite
 # ou 1 si elle appartient à une droite
+        
+def planetes_productives(carte):
+    lg=len(carte.liste_planetes)
+    cad_1=[]
+    cad_2=[]
+    cad_3=[]
+    for i in range (0,lg):
+        if carte.liste_planetes[i].cadence_prod==1:
+            cad_1.append(carte.liste_planetes[i])
+        else:
+            if carte.liste_planetes[i].cadence_prod==2:
+                cad_2.append(carte.liste_planetes[i])
+            else:
+                cad_3.append(carte.liste_planetes[i])
+    return (cad_3+cad_2+cad_1)
+#donne la liste des planètes les plus productives aux moins productives
+
+        
+    
+    
         
