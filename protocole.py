@@ -70,12 +70,15 @@ def toOrderMsg(notre_id,pourcentage,cellule_depart,cible):
     return "["+str(notre_id)+"]MOV"+str(pourcentage)+"FROM"+cellule_depart+"TO"+cible
 
 
+#implémentation des fonctions Game_Over et End_of_Game 
 def Game_Over(state):
     if state == re.match(".*GAMEOVER(.*)",state).group(0):
-        return True
+        s = re.match(".*GAMEOVER(.*)",state).group(0).split('[')[1].split(']')
+        return int(s[0])
     else:
         return False
-
+        
+        
 def End_of_Game(state):
     if state == re.match(".*ENDOFGAME(.*)",state).group(0):
         return True
