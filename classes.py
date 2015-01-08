@@ -14,6 +14,11 @@ class Carte:
 
 
 	def graphe_dictionnaire_generator(self):
+	'''
+	Renvoie un dictionnaire de la forme suivantes:
+		{id_planete_A: {id_voisin_de_A_1: poids_de_l'arete, id_voisin_de_A_2: poids_de_l'arete, ...}, id_planete_B: {...}
+
+	'''
 		liste_ide_planetes = []
 		liste_ide_voisins = []
 		liste_poids = []
@@ -83,16 +88,31 @@ class Carte:
 
 	def dijskra(self, etape, id_planete_B, visites, distances, pere, id_planete_A):
 		
-		# On va utiliser l'algorithme de Dijskra: on calcule la distance 
-		# minimale entre la planète en argument et une autre planètes.
+	'''
+	On va utiliser l'algorithme de Dijskra: on calcule la distance minimale entre la planète en argument et une autre planète.
+	etape			: entier correpondant à l'id de la planète en cours d'étude.
+	id_planete_B	: entier.
+	visites			: listes des planetes déjà examinées.
+	distances		: dictionnaire.
+	pere			: dictionnaire.
+	id_planete_A	: entier.
 
+ 	'''
+
+		# Si on est à l'étape finale, on renvoit la distance et la liste 
+		# des planètes qu'il faut parcourir pour atteindre la planete B.
 		if etape == id_planete_B:
 			return distances[id_planete_B], self.affiche_peres(pere, id_planete_A, id_planete_B, [])
 
+		# Si la liste des visites est nulle, 
+		# on commence l'algorithme en initialisant la distance à 0.
 		if len(visites) == 0:
 			distances[etape] = 0
 
+		# On regarde les voisins de notre planète (étape).
 		for voisin in self.dict[etape]:
+
+			# Si on ne l'a pas visitée...
 			if voisin not in visites:
 				dist_voisin = distances.get(voisin, float('inf'))
 				candidat_dist = distances[etape] + self.dict[etape][voisin]
