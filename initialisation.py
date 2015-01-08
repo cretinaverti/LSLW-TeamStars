@@ -40,7 +40,7 @@ liste_plan = sorted([
 # Insertion des voisins (distances).
 liste_plan[0].liste_voisins = [[1, 2], [1, 3]]
 liste_plan[1].liste_voisins = [[1, 1]]
-liste_plan[2].liste_voisins = [[1, 1], [3, 4], [1, 3]]
+liste_plan[2].liste_voisins = [[1, 1], [3, 4], [1, 6]]
 liste_plan[3].liste_voisins = [[1, 3], [1, 7]]
 liste_plan[4].liste_voisins = [[1, 3], [1, 6], [1, 7]]
 liste_plan[5].liste_voisins = [[1, 3], [1, 5]]
@@ -64,7 +64,13 @@ for i in range(1, 8):
 
 
 
+
+
 carte.dict = carte.graphe_dictionnaire_generator()
+print(carte.dict)
 longueur, chemin = carte.plus_court_chemin(1, 7)
 print("Le plus court chemin pour aller de 1 à 7 est:", chemin, "(longueur=", longueur, ")")
+longueur, chemin = carte.plus_court_chemin(1, 5)
+print("Le plus court chemin pour aller de 1 à 5 est:", chemin, "(longueur=", longueur, ")")
+
 

@@ -14,11 +14,11 @@ class Carte:
 
 
 	def graphe_dictionnaire_generator(self):
-	'''
-	Renvoie un dictionnaire de la forme suivantes:
-		{id_planete_A: {id_voisin_de_A_1: poids_de_l'arete, id_voisin_de_A_2: poids_de_l'arete, ...}, id_planete_B: {...}
+		'''
+		Renvoie un dictionnaire de la forme suivantes:
+			{id_planete_A: {id_voisin_de_A_1: poids_de_l'arete, id_voisin_de_A_2: poids_de_l'arete, ...}, id_planete_B: {...}
 
-	'''
+		'''
 		liste_ide_planetes = []
 		liste_ide_voisins = []
 		liste_poids = []
@@ -66,7 +66,7 @@ class Carte:
 
 		return planetes_ennemi
 
-	def ma_planete_init(self):
+	def mes_planetes(self):
 	# Retourne la liste de nos planètes
 		mes_planetes = []
 
@@ -88,16 +88,16 @@ class Carte:
 
 	def dijskra(self, etape, id_planete_B, visites, distances, pere, id_planete_A):
 		
-	'''
-	On va utiliser l'algorithme de Dijskra: on calcule la distance minimale entre la planète en argument et une autre planète.
-	etape			: entier correpondant à l'id de la planète en cours d'étude.
-	id_planete_B	: entier.
-	visites			: listes des planetes déjà examinées.
-	distances		: dictionnaire.
-	pere			: dictionnaire.
-	id_planete_A	: entier.
+		'''
+		On va utiliser l'algorithme de Dijskra: on calcule la distance minimale entre la planète en argument et une autre planète.
+		etape			: entier correpondant à l'id de la planète en cours d'étude.
+		id_planete_B	: entier.
+		visites			: listes des planetes déjà examinées.
+		distances		: dictionnaire.
+		pere			: dictionnaire.
+		id_planete_A	: entier.
 
- 	'''
+ 		'''
 
 		# Si on est à l'étape finale, on renvoit la distance et la liste 
 		# des planètes qu'il faut parcourir pour atteindre la planete B.
@@ -130,6 +130,22 @@ class Carte:
 
 	def plus_court_chemin(self, id_planete_A, id_planete_B):
 		return self.dijskra(id_planete_A, id_planete_B, [], {}, {}, id_planete_A)
+
+
+	def planete_moins_defendue(self):
+		''' 1 condition en plus= si planete entourée uniquement d'amies, ignorer la planete'''
+		mini = self.mes_planetes()[0].nb_def + self.mes_planetes()[0].nb_off
+
+		for planete in self.mes_planetes():
+			if planete.nb_def + planete.nb_off < mini:
+				ret_pla = planete
+				mini = planete.nb_def + planete.nb_off
+
+		return ret_pla
+
+
+
+			
 
 
 class Planete:
@@ -166,6 +182,8 @@ class Planete:
 
 	def __eq__(self, other):
 		return self.nb_def == other.nb_def
+
+
 
 
 class Arete:
