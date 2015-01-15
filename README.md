@@ -11,13 +11,7 @@ je fais le système de gestion des state avec le serveur.
 
 ## lancer le programme
 
-en théorie, on fait :
 ```
-$ python pooobot.py -h serveurAdresse -b initialisation
-```
-
-en pratique pour le moment il n'y a que notre petit serveur de test qui marche :
-```
-$ python client.py
+$ python3 LSLW.py
 ```
 
