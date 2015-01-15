@@ -1,11 +1,14 @@
 class Carte:
 	"""docstring for Carte"""
 	def __init__(self, nb_joueur, id_joueur):
-                self.liste_planetes = []
-                self.liste_aretes = []
-                self.liste_joueurs = []
-                self.id_joueur = id_joueur
-                self.nb_joueur = nb_joueur
+                self.liste_planetes = [] # liste des planètes de la carte
+                self.liste_aretes = []   # liste des arêtes de la carte
+                self.liste_joueurs = []  # liste des joueurs du match
+                self.id_joueur = id_joueur#id de notre joeur (uid de register_pooo)
+                self.nb_joueur = nb_joueur #nombre de joueurs du match
+                self.couleur = 0  # la couleur de notre joueur
+                self.match_id = 0 # id du match
+                self.vitesse = 0  #vitesse du serveur
 
                 self.dict = {}
 		# Liste d'aretes:
@@ -161,6 +164,11 @@ class Planete:
 		self.cadence_prod = cadence_prod
 		self.nb_off = offs
 		self.nb_def = defs
+
+		#données pour la repr graphique
+		self.x = 0
+		self.y = 0
+		self.rad = 0
 		
 
     # Permet d'afficher une planète
@@ -192,7 +200,7 @@ class Arete:
 		self.ide = ide
 		self.flotte_traverse = []
 		self.distance = distance
-		self.extremites = None
+		self.extremites = []
 
 
 class Flotte:

@@ -11,7 +11,7 @@ import threading
 import logging
 import re
 
-ROOM_SIZE=4
+ROOM_SIZE=2
 
 from pooogame import Room, Contest, Player
 

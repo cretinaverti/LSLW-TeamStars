@@ -4,6 +4,6 @@ import os
 
 newpid = os.fork()
 if newpid == 0:
-    os.system("idle3 -r client_serveur/client.py")
+    os.system("idle3 -r client.py")
 else:
     os.system("idle3 -r initialisation.py")
