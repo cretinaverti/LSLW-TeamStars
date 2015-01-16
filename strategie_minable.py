@@ -1,19 +1,14 @@
 from classes import *
 from protocole import *
 
-
+"Réactualiser les données puis relancer cette fonction jusqu'à la fin du match"
 def strategie_minable(carte):
+    mes_planetes=carte.mes_planetes
     lg=len(carte.mes_planetes())
     l=len(carte.liste_planetes)
-    tab=[]
     while lg<l:
-        '''Faire un state pour réactualiser lg, l, liste_mes planetes'''
-        tab=getTabPlanetes(state):
-            mes_planetes==[]
-        for p in tab:
-            if p.proprietaire==id_joueur:
-                mes_planetes.append(p)
-        for i in mes_planetes:
-            for j in mes_planetes[i].liste_voisins:
+        for p in mes_planetes:
+            for j in mes_planetes[p].liste_voisins:
                 while (j.proprietaire!=carte.id_joueur):
-                    toOrderMsg(carte.id_joueur, 100, i.dentifiant, j.identifiant)
+                    toOrderMsg(carte.id_joueur, 100, p.dentifiant, j.identifiant)
+                mes_planetes.append(j)
