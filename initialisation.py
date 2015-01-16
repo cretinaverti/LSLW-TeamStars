@@ -1,6 +1,7 @@
 from classes import *
 from protocole import *
 import re
+import threading
 
 carte = Carte(0,0)
 
@@ -57,11 +58,21 @@ def play_pooo():
    state = state()
    moves = getMoves(state)
 
-   while (not GameOver(state) or (not End_of_Game(state)):
-      state = state_on_update()
+   while (not GameOver(state) or not End_of_Game(state)):
+      state1 = state_on_update()
+      def thread_1(state,state1):
+          while state == state1:
+          thread.mutex.acquire()
+          state = state1
+          thread.mutex.release()
       moves = getMoves(state)
-      #stratégie
-   
+      #def stratégie():
+      t1 = threading.Thread(target=thread_1, args=(state,state1,))
+      t2 = threading.Thread(target=stratégie())
+      for t in [t1,t2]:
+         t.start()
+      for t in [t1,t2]:
+         t.join()
    pass
    
       
