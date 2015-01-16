@@ -12,4 +12,4 @@ else:
     if newpid == 0:
         os.system("./pooobot.py -s localhost:9876 -b botneutre LEGROSNUL")
     else:
-        os.system("./pooobot.py -s localhost:9876 -b initialisation titi")
+        os.system("./pooobot.py -s localhost:9876 -b initialisation titi > log 2>&1")
