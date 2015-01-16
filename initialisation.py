@@ -1,6 +1,7 @@
 from classes import *
 from protocole import *
 import re
+import threading
 
 carte = Carte(0,0)
 
@@ -57,6 +58,7 @@ def play_pooo():
 	state = state()
 	moves = getMoves(state)
 
+<<<<<<< HEAD
 	while (not GameOver(state) or not End_of_Game(state)):
 		state = state_on_update()
 		moves = getMoves(state)
@@ -67,6 +69,30 @@ def play_pooo():
 		
 	
 	
+=======
+   while (not GameOver(state) or not End_of_Game(state)):
+      state1 = state_on_update()
+      mutex = threading.Semaphore(1)
+      def thread_1(state,state1):
+         while state == state1:
+            pass
+         mutex.acquire()
+         state = state1
+         mutex.release()
+      moves = getMoves(state)
+      #def stratégie():
+      t1 = threading.Thread(target=thread_1, args=(state,state1,))
+      t2 = threading.Thread(target=stratégie())
+      for t in [t1,t2]:
+         t.start()
+      for t in [t1,t2]:
+         t.join()
+   pass
+   
+      
+   
+   
+>>>>>>> a8e8a89c37856cf521e1766af06859a71f801b07
 
 
 #faudra tester avec une autre chaine quand même
