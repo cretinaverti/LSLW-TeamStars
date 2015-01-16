@@ -99,8 +99,13 @@ def test():
    #       chaine_order = toOrderMsg(carte.id_joueur, 50, 0, planete)
 
 
-   carte.dict = carte.graphe_dictionnaire_generator()
-   print(carte.dict)
+
+   # Attention à bien génerer le dictionnaire des planètes avant tout utilisation
+   # de méthodes telle que plus_court_chemin()!
+   carte.dict_distances = carte.graphe_dictionnaire_distances_generator()
+   l, ch = carte.planete_la_plus_proche(1, [4, 5, 6, 7])
+   print("l=", l, "ch=", ch)
+   
    longueur, chemin = carte.plus_court_chemin(1, 7)
    print("Le plus court chemin pour aller de 1 à 7 est:", chemin, "(longueur=", longueur, ")")
    longueur, chemin = carte.plus_court_chemin(1, 5)

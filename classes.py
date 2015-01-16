@@ -10,13 +10,14 @@ class Carte:
                 self.match_id = 0 # id du match
                 self.vitesse = 0  #vitesse du serveur
 
-                self.dict = {}
+                self.dict_distances = {}
+                self.dict_unites = {}
 		# Liste d'aretes:
 		# 	matrice d'Aretes
 
 
 
-	def graphe_dictionnaire_generator(self):
+	def graphe_dictionnaire_distances_generator(self):
 		'''
 		Renvoie un dictionnaire de la forme suivantes:
 			{id_planete_A: {id_voisin_de_A_1: poids_de_l'arete, id_voisin_de_A_2: poids_de_l'arete, ...}, id_planete_B: {...}
@@ -89,10 +90,11 @@ class Carte:
 	    else:
 	        return self.affiche_peres(pere, id_planete_A, pere[extremite], [extremite] + trajet)
 
-	def dijskra(self, etape, id_planete_B, visites, distances, pere, id_planete_A):
+	def dijskra(self,_type, etape, id_planete_B, visites, distances, pere, id_planete_A):
 		
 		'''
 		On va utiliser l'algorithme de Dijskra: on calcule la distance minimale entre la planète en argument et une autre planète.
+		_type 			: précise le type 
 		etape			: entier correpondant à l'id de la planète en cours d'étude.
 		id_planete_B	: entier.
 		visites			: listes des planetes déjà examinées.
@@ -101,6 +103,11 @@ class Carte:
 		id_planete_A	: entier.
 
  		'''
+
+		if _type == type_distances:
+ 			_dict = self.dict_distances
+		elif _type == type_unites:
+ 			_dict = self.dict_unites
 
 		# Si on est à l'étape finale, on renvoit la distance et la liste 
 		# des planètes qu'il faut parcourir pour atteindre la planete B.
@@ -118,7 +125,7 @@ class Carte:
 			# Si on ne l'a pas visitée...
 			if voisin not in visites:
 				dist_voisin = distances.get(voisin, float('inf'))
-				candidat_dist = distances[etape] + self.dict[etape][voisin]
+				candidat_dist = distances[etape] + self._dict[etape][voisin]
 
 				if candidat_dist < dist_voisin:
 					distances[voisin] = candidat_dist
@@ -126,25 +133,39 @@ class Carte:
 
 		visites.append(etape)
 		
-		non_visites = dict((s, distances.get(s, float('inf'))) for s in self.dict if s not in visites)
+		non_visites = dict((s, distances.get(s, float('inf'))) for s in self._dict if s not in visites)
 		noeud_plus_proche = min(non_visites, key = non_visites.get)
 
 		return self.dijskra(noeud_plus_proche, id_planete_B, visites, distances, pere, id_planete_A)
 
 	def plus_court_chemin(self, id_planete_A, id_planete_B):
-		return self.dijskra(id_planete_A, id_planete_B, [], {}, {}, id_planete_A)
+		return self.dijskra(type_, id_planete_A, id_planete_B, [], {}, {}, id_planete_A)
 
 
 	def planete_moins_defendue(self):
-		''' 1 condition en plus= si planete entourée uniquement d'amies, ignorer la planete'''
+
 		mini = self.mes_planetes()[0].nb_def + self.mes_planetes()[0].nb_off
+		ret_pla = self.mes_planetes()[0]
 
 		for planete in self.mes_planetes():
-			if planete.nb_def + planete.nb_off < mini:
+			if (planete.nb_def + planete.nb_off < mini) and not(planete.entouree_amis()):
 				ret_pla = planete
 				mini = planete.nb_def + planete.nb_off
 
 		return ret_pla
+
+
+	def planete_la_plus_proche(self, id_planete_A, liste_ide_planetes):
+
+		l, chemin = self.plus_court_chemin(id_planete_A, liste_ide_planetes[0])
+		cp = _l + self.get_planete(ide_pla).nb_off + self.get_planete(ide_pla).nb_def
+
+		for ide_pla in liste_ide_planetes:
+			_l, _ch = self.plus_court_chemin(id_planete_A, ide_pla)
+			cp = cp + _l + self.get_planete(ide_pla).nb_off + self.get_planete(ide_pla).nb_def
+			if  _l < l:
+				l, chemin = self.plus_court_chemin(id_planete_A, ide_pla)
+		return l, chemin
 
 
 
