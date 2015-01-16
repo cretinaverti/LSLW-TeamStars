@@ -60,11 +60,13 @@ def play_pooo():
 
    while (not GameOver(state) or not End_of_Game(state)):
       state1 = state_on_update()
+      mutex = threading.Semaphore(1)
       def thread_1(state,state1):
-          while state == state1:
-          thread.mutex.acquire()
-          state = state1
-          thread.mutex.release()
+         while state == state1:
+            pass
+         mutex.acquire()
+         state = state1
+         mutex.release()
       moves = getMoves(state)
       #def stratégie():
       t1 = threading.Thread(target=thread_1, args=(state,state1,))
