@@ -15,3 +15,9 @@ je fais le système de gestion des state avec le serveur.
 $ python3 LSLW.py
 ```
 
+pour voir ce qui se passe du côté de notre bot :
+```
+$ tail -f log
+```
+
+
