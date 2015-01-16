@@ -1,44 +1,57 @@
 class Carte:
 	"""docstring for Carte"""
 	def __init__(self, nb_joueur, id_joueur):
-                self.liste_planetes = [] # liste des planètes de la carte
-                self.liste_aretes = []   # liste des arêtes de la carte
-                self.liste_joueurs = []  # liste des joueurs du match
-                self.id_joueur = id_joueur#id de notre joeur (uid de register_pooo)
-                self.nb_joueur = nb_joueur #nombre de joueurs du match
-                self.couleur = 0  # la couleur de notre joueur
-                self.match_id = 0 # id du match
-                self.vitesse = 0  #vitesse du serveur
+				self.liste_planetes = [] # liste des planètes de la carte
+				self.liste_aretes = []   # liste des arêtes de la carte
+				self.liste_joueurs = []  # liste des joueurs du match
+				self.id_joueur = id_joueur#id de notre joeur (uid de register_pooo)
+				self.nb_joueur = nb_joueur #nombre de joueurs du match
+				self.couleur = 0  # la couleur de notre joueur
+				self.match_id = 0 # id du match
+				self.vitesse = 0  #vitesse du serveur
 
-                self.dict_distances = {}
-                self.dict_unites = {}
+				self.dict_distances = {}
+				self.dict_unites = {}
 		# Liste d'aretes:
 		# 	matrice d'Aretes
 
 
 
-	def graphe_dictionnaire_distances_generator(self):
+	def graphe_dictionnaire_generator(self, _type):
 		'''
 		Renvoie un dictionnaire de la forme suivantes:
-			{id_planete_A: {id_voisin_de_A_1: poids_de_l'arete, id_voisin_de_A_2: poids_de_l'arete, ...}, id_planete_B: {...}
-
+			Si _type = "t_distances": {id_planete_A: {id_voisin_de_A_1: poids_de_l'arete, id_voisin_de_A_2: poids_de_l'arete, ...}, id_planete_B: ... }
+			Si _type = "t_unites": {id_planete_A: {id_voisin_de_A_1: nb_off+nb_def, id_voisin_de_A_2: nb_off+nb_def, ...}, id_planete_B: ... }
 		'''
 		liste_ide_planetes = []
 		liste_ide_voisins = []
 		liste_poids = []
 
+
+		# Pour chaque planètes...
 		for planete in self.liste_planetes:
+
+			# On ajoute à liste_ide_planetes l'identifiant de la planète;
 			liste_ide_planetes.append(planete.identifiant)
 			
+			# on ajoute les voisins de la la planète courante;
 			_liste_ide_voisins = []
 			for voisin in planete.liste_voisins:
 				_liste_ide_voisins.append(voisin[1])
 				
+			# on créer une liste de liste de voisins.
 			liste_ide_voisins.append(_liste_ide_voisins)
 
 			_liste_poids = []
-			for voisin in planete.liste_voisins:
-				_liste_poids.append(voisin[0])
+			# Cas ou l'on veut la distance.
+			if _type == "t_distances":
+				for voisin in planete.liste_voisins:
+					_liste_poids.append(voisin[0])
+
+			# Cas ou l'on veut la somme des unités défensive et offensive.
+			elif _type == "t_unites":
+				for voisin in planete.liste_voisins:
+					_liste_poids.append(self.get_planete_by(voisin[1]).nb_def + self.get_planete_by(voisin[1]).nb_off)
 
 			liste_poids.append(_liste_poids)
 		
@@ -49,6 +62,13 @@ class Carte:
 			
 
 		return dict( zip(liste_ide_planetes, l_dic_p) ) # Mettre "yield" si l'on veut un générateur (~ itérateur).
+
+
+	def get_planete_by(self, id_planete):
+		for pla in self.liste_planetes:
+			if pla.identifiant == id_planete:
+				return pla
+
 
 
 
@@ -84,17 +104,17 @@ class Carte:
 
 	# Fonctions servant à implémenter l'agorithme de Dijskra.
 	def affiche_peres(self, pere, id_planete_A, extremite, trajet):
-	    
-	    if extremite == id_planete_A:
-	        return [id_planete_A] + trajet
-	    else:
-	        return self.affiche_peres(pere, id_planete_A, pere[extremite], [extremite] + trajet)
+		
+		if extremite == id_planete_A:
+			return [id_planete_A] + trajet
+		else:
+			return self.affiche_peres(pere, id_planete_A, pere[extremite], [extremite] + trajet)
 
-	def dijskra(self,_type, etape, id_planete_B, visites, distances, pere, id_planete_A):
+	def dijskra(self, _type, etape, id_planete_B, visites, distances, pere, id_planete_A):
 		
 		'''
 		On va utiliser l'algorithme de Dijskra: on calcule la distance minimale entre la planète en argument et une autre planète.
-		_type 			: précise le type 
+		_type 			: chaine de caractère précisant le type de dictionnaire que doit utiliser l'algorithme de Dijskra. 
 		etape			: entier correpondant à l'id de la planète en cours d'étude.
 		id_planete_B	: entier.
 		visites			: listes des planetes déjà examinées.
@@ -102,12 +122,17 @@ class Carte:
 		pere			: dictionnaire.
 		id_planete_A	: entier.
 
- 		'''
+		'''
+		try:
+			if _type == "t_distances":
+				self.dict_distances = self.graphe_dictionnaire_generator("t_distances")
+				_dict = self.dict_distances
+			elif _type == "t_unites":
+				self.dict_unites = self.graphe_dictionnaire_generator("t_unites")
+				_dict = self.dict_unites
+		except ValueError:
+			raise e
 
-		if _type == type_distances:
- 			_dict = self.dict_distances
-		elif _type == type_unites:
- 			_dict = self.dict_unites
 
 		# Si on est à l'étape finale, on renvoit la distance et la liste 
 		# des planètes qu'il faut parcourir pour atteindre la planete B.
@@ -120,12 +145,12 @@ class Carte:
 			distances[etape] = 0
 
 		# On regarde les voisins de notre planète (étape).
-		for voisin in self.dict[etape]:
+		for voisin in _dict[etape]:
 
 			# Si on ne l'a pas visitée...
 			if voisin not in visites:
 				dist_voisin = distances.get(voisin, float('inf'))
-				candidat_dist = distances[etape] + self._dict[etape][voisin]
+				candidat_dist = distances[etape] + _dict[etape][voisin]
 
 				if candidat_dist < dist_voisin:
 					distances[voisin] = candidat_dist
@@ -133,13 +158,16 @@ class Carte:
 
 		visites.append(etape)
 		
-		non_visites = dict((s, distances.get(s, float('inf'))) for s in self._dict if s not in visites)
+		non_visites = dict((s, distances.get(s, float('inf'))) for s in _dict if s not in visites)
 		noeud_plus_proche = min(non_visites, key = non_visites.get)
 
-		return self.dijskra(noeud_plus_proche, id_planete_B, visites, distances, pere, id_planete_A)
+		return self.dijskra(_type, noeud_plus_proche, id_planete_B, visites, distances, pere, id_planete_A)
 
 	def plus_court_chemin(self, id_planete_A, id_planete_B):
-		return self.dijskra(type_, id_planete_A, id_planete_B, [], {}, {}, id_planete_A)
+		return self.dijskra("t_distances", id_planete_A, id_planete_B, [], {}, {}, id_planete_A)
+
+	def chemin_le_moins_couteux(self, id_planete_A, id_planete_B):
+		return self.dijskra("t_unites", id_planete_A, id_planete_B, [], {}, {}, id_planete_A)
 
 
 	def planete_moins_defendue(self):
@@ -192,7 +220,7 @@ class Planete:
 		self.rad = 0
 		
 
-    # Permet d'afficher une planète
+	# Permet d'afficher une planète
 	def __repr__(self):
 	  s = "Planete "+str(self.identifiant)+"\n"
 	  s += "Proprio : "+str(self.proprietaire)+"\n"
@@ -204,7 +232,7 @@ class Planete:
 	# Sert à la méthode sort(); pour comparer les planetes entre elles, 
 	# et donc à trier les planètes suivnt ses critères... 
 	def __lt__(self, other):
-	  	return self.nb_def < other.nb_def
+		return self.nb_def < other.nb_def
 
 	def __gt__(self, other):
 		return self.nb_def > other.nb_def
