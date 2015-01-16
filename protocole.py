@@ -67,8 +67,25 @@ state = "STATE20ac18ab-6d18-450e-94af-bee53fdc8fcaIS2;3CELLS:1[2]12'4,2[2]15'2,3
 
 # Retourne une chaine de caractère conforme au protocole ORDER
 def toOrderMsg(notre_id,pourcentage,cellule_depart,cible):
-    return "["+str(notre_id)+"]MOV"+str(pourcentage)+"FROM"+cellule_depart+"TO"+cible
+    order("["+str(notre_id)+"]MOV"+str(pourcentage)+"FROM"+cellule_depart+"TO"+cible)
 
 
+def Game_Over(state):
+    if state == re.match(".*GAMEOVER(.*)",state).group(0):
+        s = re.match(".*GAMEOVER(.*)",state).group(0).split('[')[1].split(']')
+        return int(s[0])
+    else:
+        return False
+
+def End_of_Game(state):
+    if state == re.match(".*ENDOFGAME(.*)",state).group(0):
+        return True
+    else:
+        return False
+
+state1 = "GAMEOVER[2]IN20ac18ab-6d18-450e-94af-bee53fdc8fca"
+state2 = "ENDOFGAME20ac18ab-6d18-450e-94af-bee53fdc8fca"
 
 print(getMoves(state))
+print (Game_Over(state1))
+print (End_of_Game(state2))
