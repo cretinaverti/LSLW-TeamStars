@@ -66,9 +66,8 @@ state = "STATE20ac18ab-6d18-450e-94af-bee53fdc8fcaIS2;3CELLS:1[2]12'4,2[2]15'2,3
 #################
 
 # Retourne une chaine de caractère conforme au protocole ORDER
-def toOrderMsg(pourcentage,cellule_depart,cible):
-    global carte
-    order("["+str(carte.id_joueur)+"]MOV"+str(pourcentage)+"FROM"+cellule_depart+"TO"+cible)
+def toOrderMsg(notre_id,pourcentage,cellule_depart,cible):
+    order("["+str(notre_id)+"]MOV"+str(pourcentage)+"FROM"+cellule_depart+"TO"+cible)
 
 
 def Game_Over(state):
