@@ -57,7 +57,7 @@ def play_pooo():
    state = state()
    moves = getMoves(state)
 
-   while (not GameOver(state) or (not End_of_Game(state)):
+   while (not GameOver(state) or not End_of_Game(state)):
       state = state_on_update()
       moves = getMoves(state)
       #stratégie

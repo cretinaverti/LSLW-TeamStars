@@ -1,4 +1,20 @@
 from tkinter import *
+from classes import *
+from initialisation import *
+
+global carte
+print(carte)
+
+#création d'un faux init
+debut = "INIT20ac18ab-6d18-450e-94af-bee53fdc8fcaTO2[1];1;7CELLS:"
+p1 = "1(150,500)'1'50'10'II,"
+p2 = "2(300,600)'1'50'10'I,"
+p3 = "3(600,450)'1'50'10'I,"
+p4 = "4(600,150)'1'50'10'I,"
+p5 = "5(800,300)'1'50'10'I,"
+p6 = "6(900,450)'1'50'10'I,"
+p7 = "7(1000,150)'1'50'10'II;8LINES:"
+debut += p1 + p2 + p3 + p4 + p5 + p6 + p7
 
 
 
@@ -13,27 +29,27 @@ Fenetre.title("Mon programme avec Tkinter") # Donne un titre à la fenêtre (par
  
 # Dans Fenetre nous allons créer un objet type Canvas qui se nomme zone_dessin
 # Nous donnons des valeurs aux propriétés "width", "height", "bg", "bd", "relief"
-z = Canvas(Fenetre,width=500,height=500,
+z = Canvas(Fenetre,width=1200,height=700,
 			            bg='black',bd=8,relief="ridge")
 z.pack() #Affiche le Canvas
 
-z.create_line(50,300,200,450,fill='white',width=4)
-z.create_line(50,300,250,250,fill='white',width=4)
-z.create_line(250,250,250,50,fill='white',width=4)
-z.create_line(250,250,350,150,fill='white',width=4)
-z.create_line(250,250,400,250,fill='white',width=4)
-z.create_line(350,150,400,250,fill='white',width=4)
-z.create_line(350,150,450,50,fill='white',width=4)
-z.create_line(250,50,450,50,fill='white',width=4)
+z.create_line(150,500,300,600,fill='white',width=4)
+z.create_line(150,500,600,450,fill='white',width=4)
+z.create_line(600,450,600,150,fill='white',width=4)
+z.create_line(600,450,800,300,fill='white',width=4)
+z.create_line(600,450,900,450,fill='white',width=4)
+z.create_line(800,300,900,450,fill='white',width=4)
+z.create_line(800,300,1000,150,fill='white',width=4)
+z.create_line(600,150,1000,150,fill='white',width=4)
 
 
-creerPlanete(z,450,50,2)
-creerPlanete(z,350,150,1)
-creerPlanete(z,250,250,1)
-creerPlanete(z,400,250,1)
-creerPlanete(z,50,300,2)
-creerPlanete(z,200,450,1)
-creerPlanete(z,250,50,1)
+creerPlanete(z,150,500,2)
+creerPlanete(z,300,600,1)
+creerPlanete(z,600,450,1)
+creerPlanete(z,600,150,1)
+creerPlanete(z,800,300,1)
+creerPlanete(z,900,450,1)
+creerPlanete(z,1000,150,2)
 
 z.create_text(50,300-15,fill="white",width=100,text="5")
 i = z.create_text(50,300,fill="white",width=100,text="0")
@@ -41,7 +57,7 @@ z.create_text(50,300+15,fill="white",width=100,text="II")
 
 
 
-z.delete(i)
+
 
 
 
