@@ -2,28 +2,61 @@ from tkinter import *
 from classes import *
 from initialisation import *
 
-global carte
-print(carte)
-
-#création d'un faux init
-debut = "INIT20ac18ab-6d18-450e-94af-bee53fdc8fcaTO2[1];1;7CELLS:"
-p1 = "1(150,500)'1'50'10'II,"
-p2 = "2(300,600)'1'50'10'I,"
-p3 = "3(600,450)'1'50'10'I,"
-p4 = "4(600,150)'1'50'10'I,"
-p5 = "5(800,300)'1'50'10'I,"
-p6 = "6(900,450)'1'50'10'I,"
-p7 = "7(1000,150)'1'50'10'II;8LINES:"
-debut += p1 + p2 + p3 + p4 + p5 + p6 + p7
-
-
 
 def creerPlanete(z,x,y,rayon):
     z.create_oval(x-(50*rayon),y-(50*rayon),x+(50*rayon),y+(50*rayon),outline='white',fill='black',width=4)
 
 
+def make_init(z):
+    global carte
 
- 
+    #création des lignes
+    for arete in carte.liste_aretes:
+        z.create_line(carte.liste_planetes[arete.extremites[0]-1].x,
+                      carte.liste_planetes[arete.extremites[0]-1].y,
+                      carte.liste_planetes[arete.extremites[1]-1].x,
+                      carte.liste_planetes[arete.extremites[1]-1].y,fill='white',width=4)
+
+    for planete in carte.liste_planetes:
+        creerPlanete(z,planete.x,planete.y,planete.rad)
+        cad = ""
+        for i in range(0,planete.cadence_prod):
+            cad += "I"
+        z.create_text(planete.x,planete.y+15,fill="white",width=100,text=cad)
+
+global carte
+print(carte)
+
+#création d'un faux init
+debut = "INIT20ac18ab-6d18-450e-94af-bee53fdc8fcaTO2[1];1;7CELLS:"
+p1 = "1(150,500)'2'50'10'II,"
+p2 = "2(300,600)'1'50'10'I,"
+p3 = "3(600,450)'1'50'10'I,"
+p4 = "4(600,150)'1'50'10'I,"
+p5 = "5(800,300)'1'50'10'I,"
+p6 = "6(900,450)'1'50'10'I,"
+p7 = "7(1000,150)'2'50'10'II;8LINES:"
+debut += p1 + p2 + p3 + p4 + p5 + p6 + p7
+l1 = "1@5426OF2,"
+l2 = "1@7238OF3,"
+l3 = "3@6530OF4,"
+l4 = "3@5211OF5,"
+l5 = "3@12382OF6,"
+l6 = "6@5211OF5,"
+l7 = "5@7188OF7,"
+l8 = "4@13800OF7"
+init = debut + l1+l2+l3+l4+l5+l6+l7+l8
+
+init_pooo(init)
+
+Fenetre=Tk()
+Fenetre.title("LSLW")
+z = Canvas(Fenetre,width=1200,height=700,bg='black',bd=8,relief="ridge")
+z.pack()
+
+make_init(z)
+
+'''
 Fenetre=Tk()	#La fonction Tk() du module Tkinter permet de créer une fenêtre qui se nomme Fenetre
 Fenetre.title("Mon programme avec Tkinter") # Donne un titre à la fenêtre (par défaut c'est Tk)
  
@@ -56,7 +89,7 @@ i = z.create_text(50,300,fill="white",width=100,text="0")
 z.create_text(50,300+15,fill="white",width=100,text="II")
 
 
-
+'''
 
 
 
