@@ -8,7 +8,7 @@ def strategie_minable(carte):
     l=len(carte.liste_planetes)
     while lg<l:
         for p in mes_planetes:
-            for j in mes_planetes[p].liste_voisins:
-                while (j.proprietaire!=carte.id_joueur):
-                    toOrderMsg(carte.id_joueur, 100, p.dentifiant, j.identifiant)
-                mes_planetes.append(j)
+            for voisin in p.liste_voisins:
+                while (voisin.proprietaire != carte.id_joueur):
+                    toOrderMsg(carte.id_joueur, 100, p.identifiant, voisin.identifiant)
+                mes_planetes.append(voisin)
