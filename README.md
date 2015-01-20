@@ -12,12 +12,16 @@ je fais le système de gestion des state avec le serveur.
 ## lancer le programme
 
 ```
-$ python3 LSLW.py
+$ ./poooserver.py -P 9876 -s 1 -r 2
 ```
 
-pour voir ce qui se passe du côté de notre bot :
+lancer le bot nul :
 ```
-$ tail -f log
+$ ./pooobot.py -s localhost:9876 -b botneutre GROSNUL
 ```
 
 
+lancer notre bot :
+```
+$ ./pooobot.py -s localhost:9876 -b initialisation titi
+```

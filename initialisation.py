@@ -1,6 +1,10 @@
 from classes import *
 from protocole import *
+from tkinter import *
 import re
+import alice
+import maMap
+import threading
 
 carte = Carte(0,0)
 
@@ -12,6 +16,9 @@ def register_pooo(uid):
 
 def init_pooo(init):
    global carte
+   
+   print("\n\n\n init:\n\n"+init+"\n\n")
+   
    carte.match_id = re.match("INIT(.*)TO",init).group(1)
    carte.nb_joueur = int(re.match(".*TO(\d+)\[",init).group(1))
    carte.couleur = int(re.match(".*TO\d+\[(\d+)\]",init).group(1))
@@ -48,21 +55,25 @@ def init_pooo(init):
       a.extremites.append(int(re.match(".*OF(\d+)",i).group(1)))
       a.distance = int(re.match(".*@(.*)OF",i).group(1))
       carte.liste_aretes.append(a)
+   
+   carte.threads.append(threading.Thread(target=maMap.boucle_principale, name="interface", args=(carte,)))
+   carte.threads[0].start()
+   
 
 def play_pooo():
    global carte
-   print("YOLOO 2")
-   print(carte.liste_planetes[0])
 
-   state = state()
-   moves = getMoves(state)
-
-   while (not GameOver(state) or not End_of_Game(state)):
-      state = state_on_update()
-      moves = getMoves(state)
-      #stratégie
+   carte.threads.append(threading.Thread(target=alice.ia, name="robot_joueur", args=(carte,)))
+   carte.threads[1].start()
    
-   pass
+   for t in carte.threads:
+      t.join()
+
+   
+   
+
+   
+   
    
       
    

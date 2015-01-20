@@ -14,6 +14,9 @@ class Carte:
                 # Liste d'aretes:
                 #       matrice d'Aretes
 
+                self.map = None # canevas de l'interface graphique
+                self.threads = [] #tableau des threads
+
 
 
         def graphe_dictionnaire_distances_generator(self):
