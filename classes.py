@@ -3,11 +3,13 @@ class Carte:
 		def __init__(self, nb_joueur, id_joueur):
 				self.liste_planetes = [] # liste des planètes de la carte
 				self.liste_aretes = []   # liste des arêtes de la carte
+				# self.liste_flottes = [] #liste des flottes en mouvement, pas encore utilisé
 				self.id_joueur = id_joueur#id de notre joeur (uid de register_pooo)
 				self.nb_joueur = nb_joueur #nombre de joueurs du match
 				self.couleur = 0  # la couleur de notre joueur
 				self.match_id = 0 # id du match
 				self.vitesse = 0  #vitesse du serveur
+				self.game_over = False #true si c'est la fin du match
 
 				self.dict_distances = {}
 				self.dict_unites = {}
@@ -15,12 +17,22 @@ class Carte:
 
 				self.map = None # canevas de l'interface graphique
 				self.threads = [] #tableau des threads
+				self.mutex = threading.Lock() #exclusion mutuelle des attributs modifiés par le state
 
 
 		def get_planete_by(self, id_planete):
 			for pla in self.liste_planetes:
 				if pla.identifiant == id_planete:
 					return pla
+
+		def get_arete_by(self, id_arete):
+			for arete in self.liste_aretes:
+				if arete.ide == id_arete:
+					return arete
+
+		def flush_moves(self): #vide toutes les arêtes de leurs flottes
+                    for arete in self.liste_aretes:
+                        arete.flotte_traverse = []
 
 
 

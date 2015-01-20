@@ -3,28 +3,24 @@ from classes import *
 
 
 def creerPlanete(z,x,y,rayon):
-    z.create_oval(x-(50*rayon),y-(50*rayon),x+(50*rayon),y+(50*rayon),outline='white',fill='black',width=4)
+    z.create_oval(x-(rayon/2),y-(rayon/2),x+(rayon/2),y+(rayon/2),outline='white',fill='black',width=4)
 
 
 def make_init(carte):
 
     #création des lignes
     for arete in carte.liste_aretes:
-        print("ligne de ("+str(carte.liste_planetes[arete.extremites[0]-1].x*100+100)+","+
-                      str(carte.liste_planetes[arete.extremites[0]-1].y*100+100)+","+
-                      str(carte.liste_planetes[arete.extremites[1]-1].x*100+100)+","+
-                      str(carte.liste_planetes[arete.extremites[1]-1].y*100+100))
-        carte.map.create_line(carte.liste_planetes[arete.extremites[0]-1].x*100+100,
-                      carte.liste_planetes[arete.extremites[0]-1].y*100+100,
-                      carte.liste_planetes[arete.extremites[1]-1].x*100+100,
-                      carte.liste_planetes[arete.extremites[1]-1].y*100+100,fill='white',width=4)
+        carte.map.create_line(carte.liste_planetes[arete.extremites[0]-1].x*50+100,
+                      carte.liste_planetes[arete.extremites[0]-1].y*50+100,
+                      carte.liste_planetes[arete.extremites[1]-1].x*50+100,
+                      carte.liste_planetes[arete.extremites[1]-1].y*50+100,fill='white',width=4)
 
     for planete in carte.liste_planetes:
-        creerPlanete(carte.map,planete.x,planete.y,planete.rad)
+        creerPlanete(carte.map,planete.x*50+100,planete.y*50+100,planete.rad)
         cad = ""
         for i in range(0,planete.cadence_prod):
             cad += "I"
-        carte.map.create_text(planete.x,planete.y+15,fill="white",width=100,text=cad)
+        carte.map.create_text(planete.x*50+100,planete.y*50+100+15,fill="white",width=100,text=cad)
     
 
 
