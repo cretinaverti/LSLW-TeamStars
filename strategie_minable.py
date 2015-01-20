@@ -6,9 +6,15 @@ def strategie_minable(carte):
     mes_planetes=carte.mes_planetes
     lg=len(carte.mes_planetes())
     l=len(carte.liste_planetes)
+
     while lg<l:
         for p in mes_planetes:
-            for voisin in p.liste_voisins:
-                while (voisin.proprietaire != carte.id_joueur):
-                    toOrderMsg(carte.id_joueur, 100, p.identifiant, voisin.identifiant)
+            
+            i = 0
+            while i < len(carte.dict_distances[p.identifiant]) and carte.**get_PLanete_By**(carte.dict_distances[i]).proprietaire == carte.couleur:
+                i += 1
+                
+            if i != len(carte.dict_distances[p.identifiant]):
+                toOrderMsg(100, p.identifiant, p.liste_voisins[i])
+         
                 mes_planetes.append(voisin)
