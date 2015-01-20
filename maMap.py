@@ -10,10 +10,14 @@ def make_init(carte):
 
     #création des lignes
     for arete in carte.liste_aretes:
-        carte.map.create_line(carte.liste_planetes[arete.extremites[0]-1].x,
-                      carte.liste_planetes[arete.extremites[0]-1].y,
-                      carte.liste_planetes[arete.extremites[1]-1].x,
-                      carte.liste_planetes[arete.extremites[1]-1].y,fill='white',width=4)
+        print("ligne de ("+str(carte.liste_planetes[arete.extremites[0]-1].x*100+100)+","+
+                      str(carte.liste_planetes[arete.extremites[0]-1].y*100+100)+","+
+                      str(carte.liste_planetes[arete.extremites[1]-1].x*100+100)+","+
+                      str(carte.liste_planetes[arete.extremites[1]-1].y*100+100))
+        carte.map.create_line(carte.liste_planetes[arete.extremites[0]-1].x*100+100,
+                      carte.liste_planetes[arete.extremites[0]-1].y*100+100,
+                      carte.liste_planetes[arete.extremites[1]-1].x*100+100,
+                      carte.liste_planetes[arete.extremites[1]-1].y*100+100,fill='white',width=4)
 
     for planete in carte.liste_planetes:
         creerPlanete(carte.map,planete.x,planete.y,planete.rad)
@@ -21,16 +25,14 @@ def make_init(carte):
         for i in range(0,planete.cadence_prod):
             cad += "I"
         carte.map.create_text(planete.x,planete.y+15,fill="white",width=100,text=cad)
-
+    
 
 
 def boucle_principale(carte):
     Fenetre=Tk()
     Fenetre.title("LSLW")
-    z = Canvas(Fenetre,width=1200,height=700,bg='black',bd=8,relief="ridge")
-    z.pack()
-
-    carte.map = z
+    carte.map = Canvas(Fenetre,width=1200,height=700,bg='black',bd=8,relief="ridge")
+    carte.map.pack()
 
     make_init(carte)
    
