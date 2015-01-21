@@ -1,5 +1,6 @@
 import re
 from classes import *
+import poooc
 
 
 ##########
@@ -29,16 +30,25 @@ def getTabPlanetes(state):
     tab = []
     for chaine in sPlanete:
         ide = int(re.match("^\d+",chaine).group(0))
-        proprio = int(re.match("^\d+\[(\d)\]",chaine).group(1))
+        proprio = int(re.match(".*\[(-*\d+)\]",chaine).group(1))
         offs = int(re.match(".*\](\d+)",chaine).group(1))
         defs = int(re.match(".*(\d)$",chaine).group(1))
-        tab.append(Planete(ide,0,0,offs,defs,proprio))
+        tab.append(Planete(ide,0,0,offs,defs,proprio,0))
     return tab
 
 #retourne un tableau d'aretes sur lesquelles il y a du mouvement
 def getMoves(state):
     tab = [] #contiendra les aretes à la fin
-    m = re.match(".*MOVES:(.*)",state).group(1)
+    
+    print("\n\n\n state:\n\n"+state+"\n\n")
+    
+    x = re.match(".*MOVES:(.*)",state)
+
+    if x == None:
+        return []
+    
+    m = x.group(1)
+    
     tabAretes = re.split(",",m)
     for areteS in tabAretes:#la on a une chaine contenant les mouvements sur une arete
         arete = Arete(0)
@@ -51,9 +61,9 @@ def getMoves(state):
                 f.direction = arete.extremites[1]
             else:
                 f.direction = arete.extremites[0]
-            f.nb_unite = re.match(".(\d+)\[",flotteS).group(1)
-            f.couleur = re.match(".*\[(\d+)\]",flotteS).group(1)
-            f.distance = re.match(".*@(\d+)$",flotteS).group(1)
+            f.nb_unite = int(re.match(".(\d+)\[",flotteS).group(1))
+            f.couleur = int(re.match(".*\[(\d+)\]",flotteS).group(1))
+            f.distance = int(re.match(".*@(\d+)$",flotteS).group(1))
             arete.flotte_traverse.append(f)
         tab.append(arete)
     return tab
@@ -67,25 +77,21 @@ state = "STATE20ac18ab-6d18-450e-94af-bee53fdc8fcaIS2;3CELLS:1[2]12'4,2[2]15'2,3
 
 # Retourne une chaine de caractère conforme au protocole ORDER
 def toOrderMsg(notre_id,pourcentage,cellule_depart,cible):
-    order("["+str(notre_id)+"]MOV"+str(pourcentage)+"FROM"+cellule_depart+"TO"+cible)
+    poooc.order("["+str(notre_id)+"]MOV"+str(pourcentage)+"FROM"+cellule_depart+"TO"+cible)
 
 
 def Game_Over(state):
-    if state == re.match(".*GAMEOVER(.*)",state).group(0):
-        s = re.match(".*GAMEOVER(.*)",state).group(0).split('[')[1].split(']')
-        return int(s[0])
+    if 'GAMEOVER' in state:
+        s = re.match(".*GAMEOVER\[(.*)\]",state).group(1)
+        return int(s)
     else:
-        return False
+        return -1
 
-def End_of_Game(state):
-    if state == re.match(".*ENDOFGAME(.*)",state).group(0):
-        return True
-    else:
-        return False
-
+'''
 state1 = "GAMEOVER[2]IN20ac18ab-6d18-450e-94af-bee53fdc8fca"
 state2 = "ENDOFGAME20ac18ab-6d18-450e-94af-bee53fdc8fca"
 
 print(getMoves(state))
 print (Game_Over(state1))
 print (End_of_Game(state2))
+'''

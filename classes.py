@@ -6,11 +6,13 @@ class Carte:
                             self.liste_planetes = [] # liste des planètes de la carte
                             self.liste_aretes = []   # liste des arêtes de la carte
                             # self.liste_flottes = [] #liste des flottes en mouvement, pas encore utilisé
-                            self.id_joueur = id_joueur#id de notre joeur (uid de register_pooo)
+                            self.id_joueur = id_joueur#id de notre joueur (uid de register_pooo)
                             self.nb_joueur = nb_joueur #nombre de joueurs du match
                             self.couleur = 0  # la couleur de notre joueur
                             self.match_id = 0 # id du match
                             self.vitesse = 0  #vitesse du serveur
+                            self.game_over = False #true si fin du match
+                            self.end_of_game = False #true si fin du jeu, on arête tout
                             
                             self.dict_distances = {}
                             self.dict_unites = {}
