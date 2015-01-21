@@ -11,13 +11,10 @@ carte = Carte(0,0)
 def register_pooo(uid):
         global carte
         carte.id_joueur = uid
-        print("YOLOOOOOOOOOOOOOOOOOOOOO")
 
 
 def init_pooo(init):
         global carte
-
-        print("\n\n\n init:\n\n"+init+"\n\n")
 
         carte.match_id = re.match("INIT(.*)TO",init).group(1)
         carte.nb_joueur = int(re.match(".*TO(\d+)\[",init).group(1))

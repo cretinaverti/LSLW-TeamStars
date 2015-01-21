@@ -2,8 +2,8 @@ from tkinter import *
 from classes import *
 
 
-def creerPlanete(z,x,y,rayon):
-    z.create_oval(x-(rayon/2),y-(rayon/2),x+(rayon/2),y+(rayon/2),outline='white',fill='black',width=4)
+def creerPlanete(z,x,y,rayon,color):
+    return z.create_oval(x-(rayon/2),y-(rayon/2),x+(rayon/2),y+(rayon/2),outline=color,fill='black',width=4)
 
 
 def make_init(carte):
@@ -15,8 +15,9 @@ def make_init(carte):
                       carte.liste_planetes[arete.extremites[1]-1].x*50+100,
                       carte.liste_planetes[arete.extremites[1]-1].y*50+100,fill='white',width=4)
 
+    #création des planetes
     for planete in carte.liste_planetes:
-        creerPlanete(carte.map,planete.x*50+100,planete.y*50+100,planete.rad)
+        planete.contour = creerPlanete(carte.map,planete.x*50+100,planete.y*50+100,planete.rad,"white")
         cad = ""
         for i in range(0,planete.cadence_prod):
             cad += "I"

@@ -6,11 +6,13 @@ class Carte:
                             self.liste_planetes = [] # liste des planètes de la carte
                             self.liste_aretes = []   # liste des arêtes de la carte
                             # self.liste_flottes = [] #liste des flottes en mouvement, pas encore utilisé
-                            self.id_joueur = id_joueur#id de notre joeur (uid de register_pooo)
+                            self.id_joueur = id_joueur#id de notre joueur (uid de register_pooo)
                             self.nb_joueur = nb_joueur #nombre de joueurs du match
                             self.couleur = 0  # la couleur de notre joueur
                             self.match_id = 0 # id du match
                             self.vitesse = 0  #vitesse du serveur
+                            self.game_over = False #true si fin du match
+                            self.end_of_game = False #true si fin du jeu, on arête tout
                             
                             self.dict_distances = {}
                             self.dict_unites = {}
@@ -20,6 +22,7 @@ class Carte:
                             self.carte_a_jour = True #mis à false à chaque state
                             self.threads = [] #tableau des threads
                             self.mutex = threading.Lock() #exclusion mutuelle des attributs modifiés par le state
+                            self.majMAP = False
 
 
             def get_planete_by(self, id_planete):
@@ -105,12 +108,12 @@ class Carte:
 
                             return planetes_ennemi
 
-            def mes_planetes(self):
+            def mes_planetes(self,carte):
             # Retourne la liste de nos planètes
                             mes_planetes = []
 
-                            for planete in self.getListe_planetes:
-                                            if planete.getProprietaire == self.getCouleur or planete.getProprietaire != 0:
+                            for planete in carte.liste_planetes:
+                                            if planete.getProprietaire(carte) == carte.couleur or planete.getProprietaire(carte) != 0:
                                                             mes_planetes.append(planete)
 
                             return mes_planetes
@@ -227,13 +230,13 @@ class Carte:
                                     dijkstra=plus_court_chemin(proche.identifiant,planete_ennemie.identifiant)
 
             def flotte_la_plus_dangereuse(self):
-                            aretes=self.getListe_aretes()
-                            taille_flotte=0
-                            for arete_exam in aretes:
-                                            for flotte in arete_exam.getFlotte_traverse():
-                                                            if flotte.getNb_unite>taille_flotte:
-                                                                            taille_flotte=flotte.getNb_unite
-                                                                            destination=flotte.getDestination()
+                aretes=self.getListe_aretes()
+                taille_flotte=0
+                for arete_exam in aretes:
+                    for flotte in arete_exam.getFlotte_traverse():
+                        if flotte.getNb_unite>taille_flotte:
+                            taille_flotte=flotte.getNb_unite
+                            destination=flotte.getDestination()
                             return destination,taille_flotte
 
             def planete_voisines(self,x): #retourne les voisins de la planete x
@@ -263,6 +266,11 @@ class Planete:
                 self.x = 0
                 self.y = 0
                 self.rad = 0
+
+                #objets de la repr graphique
+                self.contour = None
+                self.off = None
+                self.deff = None
 
 
             #getteurs en exclusion mutuelle
