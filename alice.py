@@ -52,7 +52,7 @@ def ia(carte):
         lg=len(mes_planetes)
         l=len(carte.liste_planetes)
 
-        while lg<l and not(Game_Over()) and not(End_of_Game():
+        while lg<l and not(Game_Over()) and not(End_of_Game()):
             mes_planetes=carte.mes_planetes(carte)
             lg=len(mes_planetes)
 

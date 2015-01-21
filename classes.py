@@ -92,17 +92,17 @@ class Carte:
             def extremites(self):
                             extremites = []
 
-                            for planete in self.liste_planetes:
-                                            if len(self.planete_voisine(planete.identifiant)) == 1:
+                            for planete in self.getListe_planetes:
+                                            if len(planete.getListe_voisins) == 1:
                                                             extremites.append(planete)
                             return extremites
 
-            def planetes_ennemi(self,carte):
+            def planetes_ennemi(self):
             # Retourne la liste des planètes ennemies.
                             planetes_ennemi = []
 
                             for planete in self.liste_planetes:
-                                            if planete.getProprietaire(carte) != self.couleur or planete.getProprietaire(carte) != 0:
+                                            if planete.getProprietaire != self.getCouleur or planete.getProprietaire != 0:
                                                             planetes_ennemi.append(planete)
 
                             return planetes_ennemi
@@ -111,8 +111,8 @@ class Carte:
             # Retourne la liste de nos planètes
                             mes_planetes = []
 
-                            for planete in self.liste_planetes:
-                                            if planete.getProprietaire(carte) == self.couleur or planete.getProprietaire != 0:
+                            for planete in carte.liste_planetes:
+                                            if planete.getProprietaire(carte) == carte.couleur or planete.getProprietaire(carte) != 0:
                                                             mes_planetes.append(planete)
 
                             return mes_planetes
@@ -186,59 +186,56 @@ class Carte:
             def chemin_le_moins_couteux(self, id_planete_A, id_planete_B):
                     return self.dijskra("t_unites", id_planete_A, id_planete_B, [], {}, {}, id_planete_A)
 
-            def planete_moins_defendue(self,carte):
+            def planete_moins_defendue(self):
 
-                            mini = self.mes_planetes(carte)[0].getNb_def(carte) + self.mes_planetes(carte)[0].getNb_off(carte)
-                            ret_pla = self.mes_planetes(carte)[0]
+                            mini = self.mes_planetes()[0].getNb_def + self.mes_planetes()[0].getNb_off
+                            ret_pla = self.mes_planetes()[0]
 
-                            for planete in self.mes_planetes(carte):
-                                            if (planete.getNb_def(carte) + planete.getNb_off(carte) < mini) and not(planete.entouree_amis()):
+                            for planete in self.mes_planetes():
+                                            if (planete.getNb_def + planete.getNb_off < mini) and not(planete.entouree_amis()):
                                                             ret_pla = planete
-                                                            mini = planete.getNb_def(carte) + planete.getNb_off(carte)
+                                                            mini = planete.getNb_def + planete.getNb_off
 
                             return ret_pla
 
 
-            def planete_la_plus_proche(self, id_planete_A, liste_ide_planetes,carte):
+            def planete_la_plus_proche(self, id_planete_A, liste_ide_planetes):
 
                             l, chemin = self.plus_court_chemin(id_planete_A, liste_ide_planetes[0])
-                            cp = _l + self.get_planete_by(ide_pla).getNb_off + self.get_planete_by(ide_pla).getNb_def
+                            cp = _l + self.get_planete(ide_pla).nb_off + self.get_planete(ide_pla).nb_def
 
                             for ide_pla in liste_ide_planetes:
                                             _l, _ch = self.plus_court_chemin(id_planete_A, ide_pla)
-                                            cp = cp + _l + self.get_planete_by(ide_pla).getNb_off(carte) + self.get_planete_by(ide_pla).getNb_def
+                                            cp = cp + _l + self.get_planete(ide_pla).nb_off + self.get_planete(ide_pla).nb_def
                                             if  _l < l:
                                                             l, chemin = self.plus_court_chemin(id_planete_A, ide_pla)
                             return l, chemin
 
-            def planetes_productrices_a_prendre(self,carte):
+            def planetes_productrices_a_prendre(self):
                             '''Vérifier la façon d'écrire le niveau de production'''
                             liste_2=[]
                             liste_3=[]
-                            for planete in self.liste_planetes:
-                                    if planete.getProprietaire(carte)!=self.couleur:
-                                            if planete.cadence_prod==2:
+                            for planete in self.getListe_planetes:
+                                    if planete.getProprietaire!=self.getCouleur:
+                                            if planete.getCadence_prod==2:
                                                     liste_2.append(planete)
-                                            if planete.cadence_prod==3:
+                                            if planete.getCadence_prod==3:
                                                     liste_3.append(planete)
                             return (liste_3+liste_2)
 
-            def planete_attaque_rapide(self, planete_ennemie, carte):
-                            mes_planetes=self.mes_planetes(carte)
+            def planete_attaque_rapide(self, planete_ennemie):
+                            mes_planetes=self.mes_planetes()
                             for proche in mes_planetes:
                                     dijkstra=plus_court_chemin(proche.identifiant,planete_ennemie.identifiant)
 
-            def flotte_la_plus_dangereuse(self,carte):
-                        couleur=carte.couleur
-                            aretes=self.liste_aretes
-                            taille_flotte=0
-                            for arete_exam in aretes:
-                                        flotte_arete=arete_exam.getFlotte_traverse()
-                                    
-                                            for flotte in flotte_arete:
-                                                            if flotte.nb_unite>taille_flotte and not(flotte.couleur==couleur):
-                                                                            taille_flotte=flotte.nb_unite
-                                                                            destination=flotte.destination()
+            def flotte_la_plus_dangereuse(self):
+                aretes=self.getListe_aretes()
+                taille_flotte=0
+                for arete_exam in aretes:
+                    for flotte in arete_exam.getFlotte_traverse():
+                        if flotte.getNb_unite>taille_flotte:
+                            taille_flotte=flotte.getNb_unite
+                            destination=flotte.getDestination()
                             return destination,taille_flotte
 
             def planete_voisines(self,x): #retourne les voisins de la planete x
@@ -249,16 +246,6 @@ class Carte:
                                             elif x == self.liste_aretes[i].extremites[1]:
                                                             liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[0]])
                             return liste
-                            
-            def voisin_ennemi_moins_defendu(self, carte, id_planete):
-                            nb=self.get_planete_by(carte.planete_voisins(id_planete)[0]).defense_actuelle_planete(carte)
-                            planete=self.get_planete_by(carte.planete_voisins(id_planete)[0])
-                            for i in carte.planete_voisins(id_planete):
-                                            nbr=self.get_planete_by(i).defense_actuelle_planete(carte)
-                                            if i.proprietaire!=carte.couleur and nb>nbr:
-                                                            nb=nbr
-                                                            planete=self.get_planete_by(i)
-                            return planete
 
 class Planete:
             """docstring for Cellule"""
@@ -320,18 +307,18 @@ class Planete:
             def __eq__(self, other):
                             return self.nb_def == other.nb_def
 
-            def entouree_amis(self, carte, id_planete):
+            def entouree_amis(self, couleur):
 
-                    for voisin in self.planete_voisines(id_planete):
-                            if voisin.getProprietaire(carte)!=carte.couleur:
+                    for voisin in self.liste_voisins:
+                            if voisin.getProprietaire!=couleur:
                                     return False
                     return True
 
-            def unique_ennemi_voisin(self, carte):
+            def unique_ennemi_voisin(self, couleur):
                     compteur=0
                     ennemi=None
-                    for voisin in self.planete_voisines(id_planete):
-                            if voisin.getProprietaire(carte)!=carte.couleur:
+                    for voisin in self.getListe_voisins:
+                            if voisin.getProprietaire!=couleur:
                                     ennemi=voisin
                                     compteur+=1
                             if compteur>1 or compteur==0:
@@ -340,21 +327,31 @@ class Planete:
 
             
 
-            def defense_actuelle_planete(self,carte):
-                            return (self.getNb_off(carte)+self.getNb_def(carte))
- 
+            def defense_actuelle_planete(self):
+                            return (self.getNb_off+self.getNb_def)
+
             def defense_possible_planetes(self):
-                            return (self.unit_max_off+self.unit_max_def)
+                            return (self.getUnit_max_off+self.getUnit_max_def)
 
-
-            def pourcentage_a_expedier(self,carte, but):
+            def voisin_ennemi_moins_defendu(self, couleur):
+                            nb=self.getListe_voisins[0].defense_actuelle()
+                            planete=self.getListe_voisins[0]
+                            for i in self.getListe_voisins:
+                                            nbr=self.getListe_voisins[i].defense_actuelle()
+                                            if i.proprietaire!=couleur and nb>nbr:
+                                                            nb=nbr
+                                                            planete=i
+                            return planete
+            def pourcentage_a_expedier(self,but):
                             '''La moitié de ce qu'il a en plus'''
-                            if self.defense_actuelle_planete(carte)<but.defense_actuelle_planete(carte):
+                            if self.defense_actuelle_planete()<but.defense_actuelle_planete():
                                             return 0
                             else:
-                                            return(self.defense_actuelle_planete(carte)-but.defense_actuelle_planete(carte))/2                                    
+                                            return(self.defense_actuelle_planete()-but.defense_actuelle_planete())/2                                    
 
        
+                                                                                                                                     
+                                                                       
 class Arete:
             """docstring for Arete"""
             def __init__(self, distance, ide = None):
