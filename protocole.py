@@ -40,8 +40,6 @@ def getTabPlanetes(state):
 def getMoves(state):
     tab = [] #contiendra les aretes à la fin
     
-    print("\n\n\n state:\n\n"+state+"\n\n")
-    
     x = re.match(".*MOVES:(.*)",state)
 
     if x == None:
