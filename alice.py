@@ -40,8 +40,7 @@ def ia(carte):
     lg=len(mes_planetes)
     l=len(carte.liste_planetes)
 
-    while lg<l and not(Game_Over(state)) and not(End_of_Game(state):
-        carte.liste_planetes=getTabPlanetes(state)
+    while lg<l and not(Game_Over()) and not(End_of_Game():
         mes_planetes=carte.mes_planetes(carte)
         lg=len(mes_planetes)
 
@@ -53,4 +52,4 @@ def ia(carte):
                 
                 if i != len(carte.planete_voisines(planete.identifiant)):
                     toOrderMsg(carte.id_joueur,100, planete.identifiant, carte.planete_voisines(p.identifiant)[i][1])
-        state=state()
+        
