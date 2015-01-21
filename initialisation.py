@@ -63,8 +63,11 @@ def init_pooo(init):
 def play_pooo():
 	global carte
 
+        carte.threads.append(threading.Thread(target=alice.watchdog, name="watchdog", args=(carte,)))
+        carte.threads[1].start()
+
 	carte.threads.append(threading.Thread(target=alice.ia, name="robot_joueur", args=(carte,)))
-	carte.threads[1].start()
+	carte.threads[2].start()
 	
 	for t in carte.threads:
 		t.join()
