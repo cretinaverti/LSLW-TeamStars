@@ -77,7 +77,7 @@ class Carte:
                             # Cas ou l'on veut la somme des unités défensive et offensive.
                             elif _type == "t_unites":
                                     for voisin in planete.liste_voisins:
-                                            _liste_poids.append(self.get_planete_by(voisin[1]).nb_def + self.get_planete_by(voisin[1]).nb_off)
+                                            _liste_poids.append(self.get_planete_by(voisin[1]).getNb_def(self) + self.get_planete_by(voisin[1]).getNb_off(self))
 
                             liste_poids.append(_liste_poids)
                     
@@ -189,17 +189,17 @@ class Carte:
 
             def planete_moins_defendue(self):
 
-                            mini = self.mes_planetes()[0].getNb_def + self.mes_planetes()[0].getNb_off
+                            mini = self.mes_planetes()[0].getNb_def(self) + self.mes_planetes()[0].getNb_off(self)
                             ret_pla = self.mes_planetes()[0]
 
                             for planete in self.mes_planetes():
-                                            if (planete.getNb_def + planete.getNb_off < mini) and not(planete.entouree_amis()):
+                                            if (planete.getNb_def(self) + planete.getNb_off(self) < mini) and not(planete.entouree_amis()):
                                                             ret_pla = planete
-                                                            mini = planete.getNb_def + planete.getNb_off
+                                                            mini = planete.getNb_def(self) + planete.getNb_off(self)
 
                             return ret_pla
 
-
+            ####
             def planete_la_plus_proche(self, id_planete_A, liste_ide_planetes):
 
                             l, chemin = self.plus_court_chemin(id_planete_A, liste_ide_planetes[0])
