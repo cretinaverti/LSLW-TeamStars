@@ -8,10 +8,7 @@ def strategie_minable(carte):
     l=len(carte.liste_planetes)
 
     while lg<l and not(Game_Over(state)) and not(End_of_Game(state):
-        carte.liste_planetes=getTabPlanetes(state)
-        mes_planetes=carte.mes_planetes(carte)
-        lg=len(mes_planetes)
-
+        
         for planete in mes_planetes:
             i = 0
     
