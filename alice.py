@@ -35,7 +35,6 @@ def ia(carte):
     
    # while (not Game_Over()):        #mise en place des stratégies et du robot
    #     pass
-    state=None
     mes_planetes=carte.mes_planetes(carte)
     lg=len(mes_planetes)
     l=len(carte.liste_planetes)
