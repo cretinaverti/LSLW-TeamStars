@@ -22,6 +22,7 @@ class Carte:
                             self.carte_a_jour = True #mis à false à chaque state
                             self.threads = [] #tableau des threads
                             self.mutex = threading.Lock() #exclusion mutuelle des attributs modifiés par le state
+                            self.majMAP = False
 
 
             def get_planete_by(self, id_planete):
@@ -265,6 +266,11 @@ class Planete:
                 self.x = 0
                 self.y = 0
                 self.rad = 0
+
+                #objets de la repr graphique
+                self.contour = None
+                self.off = None
+                self.deff = None
 
 
             #getteurs en exclusion mutuelle
