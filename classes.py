@@ -60,7 +60,7 @@ class Carte:
 					
 					# on ajoute les voisins de la la planète courante;
 					_liste_ide_voisins = []
-					for voisin in planete.liste_voisins:
+					for voisin in self.planete_voisines(planete):
 							_liste_ide_voisins.append(voisin[1])
 							
 					# on créer une liste de liste de voisins.
@@ -69,12 +69,12 @@ class Carte:
 					_liste_poids = []
 					# Cas ou l'on veut la distance.
 					if _type == "t_distances":
-							for voisin in planete.liste_voisins:
+							for voisin in self.planete_voisines(planete):
 									_liste_poids.append(voisin[0])
 
 					# Cas ou l'on veut la somme des unités défensive et offensive.
 					elif _type == "t_unites":
-							for voisin in planete.liste_voisins:
+							for voisin in self.planete_voisines(planete):
 									_liste_poids.append(self.get_planete_by(voisin[1]).getNb_def(self) + self.get_planete_by(voisin[1]).getNb_off(self))
 
 					liste_poids.append(_liste_poids)

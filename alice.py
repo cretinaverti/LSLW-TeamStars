@@ -3,6 +3,7 @@ from protocole import *
 import maMap
 from poooc import *
 import time
+from random import randint
 
 def watchdog(carte):
     tabCouleur = ["blue","red","green","yellow","purple","orange"]
@@ -59,15 +60,20 @@ def watchdog(carte):
 
 
 def ia(carte):
+    print("ICIIIIIIIIIIIIIIIIII")
+    carte.dict_distances = carte.graphe_dictionnaire_generator("t_distances")
+    print(carte.dict_distances)
     a,b = carte.plus_court_chemin(0,len(carte.liste_planetes)-1)
-
+    print("a : ",a)
+    print("b : ",b)
     while (not (carte.game_over or carte.end_of_game)):        #mise en place des stratégies et du robot
         mes_planetes=carte.mes_planetes(carte)
 
-        while len(carte.mes_planetes(planete)) != len(carte.liste_planetes):
+        while len(carte.mes_planetes(carte)) != len(carte.liste_planetes):
             for planete in mes_planetes:
+                time.sleep(1)
                 i = randint(0,len(carte.planete_voisines(planete)))
-                while i in mes_planetes and i not in b:
+                while carte.get_planete_by(i) in mes_planetes and i not in b:
                     i = randint(0,len(carte.planete_voisines(planete)))
                 print("LE ORDER :")
                 print(planete.identifiant)

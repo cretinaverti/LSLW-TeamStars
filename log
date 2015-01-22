@@ -1,0 +1,86 @@
+INFO:root:Bot found: ./initialisation.py
+INFO:root:Bot found: ./.c9/metadata/workspace/initialisation.py
+INFO:root:Bot initialisation playing as titi onto localhost:9876
+INFO:root:Waiting for engagement...
+INFO:root:Waiting for init new game...
+INFO:root:New game ab233f02-327d-4654-aea5-c19e689e8569
+INFO:root:Player c55793fd-d7df-4db5-a26c-4d2e9eec549e is ready to play game ab233f02-327d-4654-aea5-c19e689e8569
+DEBUG:root:Init state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]5'0,1[-1]6'0,2[-1]6'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]5'0;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]6'1,1[-1]6'0,2[-1]6'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]6'1;0MOVES"
+INFO:root:titi sends order: '[c55793fd-d7df-4db5-a26c-4d2e9eec549e]MOV100FROM0TO2'
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]0'1,1[-1]6'0,2[-1]6'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]6'1;1MOVES:0>6[0]@14384159'2"
+INFO:root:titi sends order: '[c55793fd-d7df-4db5-a26c-4d2e9eec549e]MOV100FROM0TO2'
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]0'1,1[-1]6'0,2[-1]6'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]6'1;1MOVES:0>6[0]@14384159'2"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]1'2,1[-1]6'0,2[-1]6'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]7'2;1MOVES:0>6[0]@14384159'2"
+Exception in thread robot_joueur:
+Traceback (most recent call last):
+  File "/usr/lib/python3.4/threading.py", line 920, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.4/threading.py", line 868, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/elrubio/Documents/mes cours/polytech/semestre 5/projet/LSLW-TeamStars/alice.py", line 81, in ia
+    print(carte.planete_voisines(planete)[i][1])
+IndexError: list index out of range
+
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]2'3,1[-1]6'0,2[-1]6'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]8'3;1MOVES:0>6[0]@14384159'2"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]2'3,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]8'3;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]3'4,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]9'4;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]4'5,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]10'5;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]5'6,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]11'6;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]6'7,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]12'7;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]7'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]13'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]8'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]14'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]9'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]15'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]10'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]16'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]11'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]17'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]12'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]18'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]13'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]19'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]14'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]20'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]15'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]21'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]16'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]22'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]17'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]23'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]18'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]24'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]19'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]25'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]20'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]26'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]21'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]27'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]22'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]28'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]23'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]29'8;0MOVES"
+DEBUG:root:New state: "STATEab233f02-327d-4654-aea5-c19e689e8569IS2;7CELLS:0[0]24'8,1[-1]6'0,2[-1]0'0,3[-1]12'0,4[-1]6'0,5[-1]6'0,6[1]30'8;0MOVES"
+Exception in thread watchdog:
+Traceback (most recent call last):
+  File "/usr/lib/python3.4/threading.py", line 920, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.4/threading.py", line 868, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/elrubio/Documents/mes cours/polytech/semestre 5/projet/LSLW-TeamStars/alice.py", line 42, in watchdog
+    carte.map.itemconfigure(p.contour,outline=tabCouleur[p.proprietaire])
+  File "/usr/lib/python3.4/tkinter/__init__.py", line 2419, in itemconfigure
+    return self._configure(('itemconfigure', tagOrId), cnf, kw)
+  File "/usr/lib/python3.4/tkinter/__init__.py", line 1313, in _configure
+    self.tk.call(_flatten((self._w, cmd)) + self._options(cnf))
+RuntimeError: main thread is not in main loop
+
+ERROR:root:Connection failed: server muted
+ERROR:root:Unknown msg: ''
+
+
+INIT :::
+
+
+INITab233f02-327d-4654-aea5-c19e689e8569TO2[0];1;7CELLS:0(0,0)'100'30'8'I,1(0,5)'100'30'8'I,2(5,0)'100'30'8'I,3(5,5)'200'30'8'II,4(5,10)'100'30'8'I,5(10,5)'100'30'8'I,6(10,10)'100'30'8'I;6LINES:0@4800OF1,0@4800OF2,2@4700OF3,3@4700OF4,4@4800OF6,5@4800OF6
+ICIIIIIIIIIIIIIIIIII
+{0: {1: 4800, 2: 4800}, 1: {0: 4800}, 2: {0: 4800, 3: 4700}, 3: {2: 4700, 4: 4700}, 4: {3: 4700, 6: 4800}, 5: {6: 4800}, 6: {4: 4800, 5: 4800}}
+a :  19000
+b :  [0, 2, 3, 4, 6]
+LE ORDER :
+0
+TO
+2
+LE ORDER :
+0
+TO
+2
+LE ORDER :
+0
+TO
+Tcl_AsyncDelete: async handler deleted by the wrong thread
