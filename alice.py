@@ -59,19 +59,30 @@ def watchdog(carte):
 
 
 def ia(carte):
+    a,b = carte.plus_court_chemin(0,len(carte.liste_planetes)-1)
+
     while (not (carte.game_over or carte.end_of_game)):        #mise en place des stratégies et du robot
         mes_planetes=carte.mes_planetes(carte)
 
-        for planete in mes_planetes:
-            i = 0
-
-            while i < len(carte.planete_voisines(planete)) and carte.get_planete_by(carte.planete_voisines(planete)[i][1]).proprietaire == carte.couleur:
-                i += 1
-                
-            if i != len(carte.planete_voisines(planete)):
-                time.sleep(1)
+        while len(carte.mes_planetes(planete)) != len(carte.liste_planetes):
+            for planete in mes_planetes:
+                i = randint(0,len(carte.planete_voisines(planete)))
+                while i in mes_planetes and i not in b:
+                    i = randint(0,len(carte.planete_voisines(planete)))
                 print("LE ORDER :")
                 print(planete.identifiant)
                 print("TO")
                 print(carte.planete_voisines(planete)[i][1])
                 toOrderMsg(carte.id_joueur,100, planete.identifiant, carte.planete_voisines(planete)[i][1])
+##                i = 0
+##
+##                while i < len(carte.planete_voisines(planete)) and carte.get_planete_by(carte.planete_voisines(planete)[i][1]).proprietaire == carte.couleur:
+##                    i += 1
+##                
+##                if i != len(carte.planete_voisines(planete)):
+##                    time.sleep(1)
+##                    print("LE ORDER :")
+##                    print(planete.identifiant)
+##                    print("TO")
+##                    print(carte.planete_voisines(planete)[i][1])
+##                    toOrderMsg(carte.id_joueur,100, planete.identifiant, carte.planete_voisines(planete)[i][1])
