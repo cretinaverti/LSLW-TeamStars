@@ -8,7 +8,7 @@ def creerPlanete(z,x,y,rayon,color):
 
 def make_init(carte):
 
-    yflotte = 20
+    leY = 15
     #création des lignes
     for arete in carte.liste_aretes:
         carte.map.create_line(carte.liste_planetes[arete.extremites[0]].x*50+100,
@@ -18,10 +18,16 @@ def make_init(carte):
 
         #création des déplacements
         # début = (700,20)
-        '''
+
+        leY += 5
         for i in range(0,5):
-            arete.flottes[i] = 
-        '''
+            if i==0:
+                tt = "arete "+str(arete.ide)+" de "+str(arete.extremites[0])+" vers "+str(arete.extremites[1])
+                arete.flottes.append(carte.map.create_text(700,leY,fill="white",width=200,text=tt))
+            else:
+                arete.flottes.append(carte.map.create_text(700,leY,fill="white",width=200,text=""))
+            leY += 15
+        
 
     #création des planetes
     for planete in carte.liste_planetes:
