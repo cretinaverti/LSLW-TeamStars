@@ -10,19 +10,24 @@ def make_init(carte):
 
     #création des lignes
     for arete in carte.liste_aretes:
-        carte.map.create_line(carte.liste_planetes[arete.extremites[0]-1].x*50+100,
-                      carte.liste_planetes[arete.extremites[0]-1].y*50+100,
-                      carte.liste_planetes[arete.extremites[1]-1].x*50+100,
-                      carte.liste_planetes[arete.extremites[1]-1].y*50+100,fill='white',width=4)
+        carte.map.create_line(carte.liste_planetes[arete.extremites[0]].x*50+100,
+                      carte.liste_planetes[arete.extremites[0]].y*50+100,
+                      carte.liste_planetes[arete.extremites[1]].x*50+100,
+                      carte.liste_planetes[arete.extremites[1]].y*50+100,fill='white',width=4)
 
     #création des planetes
     for planete in carte.liste_planetes:
         planete.contour = creerPlanete(carte.map,planete.x*50+100,planete.y*50+100,planete.rad,"white")
+
         cad = ""
         for i in range(0,planete.cadence_prod):
             cad += "I"
         carte.map.create_text(planete.x*50+100,planete.y*50+100+15,fill="white",width=100,text=cad)
-    
+        planete.deff = carte.map.create_text(planete.x*50+100,planete.y*50+100,fill="white",width=100,text="0")
+        planete.off  = carte.map.create_text(planete.x*50+100,planete.y*50+100-15,fill="white",width=100,text="0")
+
+        #identifiant des planetes
+        carte.map.create_text(planete.x*50+100+40,planete.y*50+100+15,fill="white",width=100,text=planete.identifiant)
 
 
 def boucle_principale(carte):

@@ -5,6 +5,7 @@ import re
 import alice
 import maMap
 import threading
+import time
 
 carte = Carte(0,0)
 
@@ -15,6 +16,9 @@ def register_pooo(uid):
 
 def init_pooo(init):
         global carte
+
+        print("\n\nINIT :::\n\n")
+        print(init)
 
         carte.match_id = re.match("INIT(.*)TO",init).group(1)
         carte.nb_joueur = int(re.match(".*TO(\d+)\[",init).group(1))
@@ -59,7 +63,7 @@ def init_pooo(init):
 
 def play_pooo():
         global carte
-
+        time.sleep(1)
         carte.threads.append(threading.Thread(target=alice.watchdog, name="watchdog", args=(carte,)))
         carte.threads[1].start()
 
