@@ -59,7 +59,7 @@ def ia(carte):
             for planete in mes_planetes:
                 i = 0
         
-                while i < len(carte.planete_voisines(planete.identifiant)) and carte.get_panete_by(carte.planete_voisines(planete.identifiant)[i][1]).proprietaire == carte.couleur:
+                while i < len(carte.planete_voisines(planete.identifiant)) and carte.get_planete_by(carte.planete_voisines(planete.identifiant)[i][1]).proprietaire == carte.couleur:
                     i += 1
                     
                     if i != len(carte.planete_voisines(planete.identifiant)):
