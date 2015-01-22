@@ -26,6 +26,10 @@ def watchdog(carte):
             planetes = getTabPlanetes(msg)
             moves = getMoves(msg)
 
+            #on renseigne les identifiants des aretes du tableau de moves, car ils n'y sont pas encore
+            for arete in moves:
+                arete.ide = carte.get_arete_by_extremites(arete)
+
             carte.mutex.acquire()
 
             #mise à jour des planètes
@@ -72,23 +76,12 @@ def ia(carte):
         while len(carte.mes_planetes(carte)) != len(carte.liste_planetes):
             for planete in mes_planetes:
                 time.sleep(1)
-                i = randint(0,len(carte.planete_voisines(planete)))
-                while carte.get_planete_by(i) in mes_planetes and i not in b:
+                i = randint(0,len(carte.planete_voisines(planete))-1)
+                while (carte.get_planete_by(i) in mes_planetes and i not in b) or i == planete.identifiant:
                     i = randint(0,len(carte.planete_voisines(planete)))
                 print("LE ORDER :")
                 print(planete.identifiant)
                 print("TO")
-                print(carte.planete_voisines(planete)[i][1])
-                toOrderMsg(carte.id_joueur,100, planete.identifiant, carte.planete_voisines(planete)[i][1])
-##                i = 0
-##
-##                while i < len(carte.planete_voisines(planete)) and carte.get_planete_by(carte.planete_voisines(planete)[i][1]).proprietaire == carte.couleur:
-##                    i += 1
-##                
-##                if i != len(carte.planete_voisines(planete)):
-##                    time.sleep(1)
-##                    print("LE ORDER :")
-##                    print(planete.identifiant)
-##                    print("TO")
-##                    print(carte.planete_voisines(planete)[i][1])
-##                    toOrderMsg(carte.id_joueur,100, planete.identifiant, carte.planete_voisines(planete)[i][1])
+                print(i)
+                #print(carte.planete_voisines(planete)[i][1])
+                toOrderMsg(carte.id_joueur,100, planete.identifiant, i)

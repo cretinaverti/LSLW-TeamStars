@@ -52,6 +52,7 @@ def init_pooo(init):
         aretes = re.split(",",re.match(".*LINES:(.*)",init).group(1))
         for i in aretes:
                 a = Arete(0)
+                a.ide = int(re.match("\d+",i).group(0))
                 a.extremites.append(int(re.match("(\d+)@",i).group(1)))
                 a.extremites.append(int(re.match(".*OF(\d+)",i).group(1)))
                 a.distance = int(re.match(".*@(.*)OF",i).group(1))
