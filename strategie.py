@@ -1,52 +1,50 @@
 from classes import *
 from protocole import *
 
-"""A repréciser si dans le toOrder le départ et la destination sont le nom
-    des planètes ou les planètes elles-mêmes. Ici, j'ai mis la planète."""
-'''Attention!!! Il faut renvoyer l'ordre, pas la chaine comme elle est dans
-    des boucles!!'''
+def report_unites(carte):
 
-def sauver_planete_en_peril(carte):
-	'''
-	Fournir des ressources d'une planete voisine mieux défendue
-	à notre planète la moins défendue
-	'''
-	planete_en_peril = carte.planete_moins_defendue()
-	somme_v=0
-	somme=planete_en_peril.nb_off+planete_en_peril.nb_def
-	for voisin in planete_en_peril.liste_voisins:
-            if voisin.entouree_amis(carte.id_joueur):
-                toOrderMsg(carte.id_joueur,"choisir pourcentage",voisin,planete_en_peril)
-            
+    carte.dict_unites = carte.graphe_dictionnaire_generator("t_unites")
 
-def vidage_planetes_securisees(carte):
+    for pla in carte.liste_planetes:
+        _, l_pla = carte.planetes_voisines("amis", pla)
+
+        if len(l_pla) == 1:
+            toOrderMsg(carte.id_joueur, 100, pla.identifiant, l_pla[0].identifiant)
+
+        l_pla_enn = carte.get_planetes_ennemies()
+
+        cout_1, l_ennemis_la_plus_proche_1 = carte.chemin_le_moins_couteux(pla.identifiant, l_pla_enn[0])
+        for pla_enn in l_pla_enn:
+                cout_2, l_ennemis_la_plus_proche_2 = carte.chemin_le_moins_couteux(pla.identifiant, pla_enn.identifiant)
+                    if cout_2 < cout_1:
+                        cout_1 = cout_2
+                        l_ennemis_la_plus_proche_1 = l_ennemis_la_plus_proche_2
+
+        for destination in l_ennemis_la_plus_proche_1:
+            _, l_pla_vois_enn = carte.planete_voisines('ennemies', carte.get_by_planete(destination))
+            if l_pla_enn == [] and pla.identifiant != destination:
+                toOrderMsg(carte.id_joueur, 100, pla.identifiant, destination)
+
+        if pla.identifiant != destination:
+            toOrderMsg(carte.id_joueur, 100, pla.identifiant, destination)
+
+def conquete_planete_solitaire_proche(carte, planete):
     '''
-    Déplace les ressources des planètes protégées
-    '''
-        mes_planetes=carte.mes_planetes()
-    for pla in mes_planetes:
-        if pla.entouree_amis(carte.id_joueur):
-            '''A completer: Trouver le plus court chemin (de planetes protégées)
-               vers une planete touchant au moins une planete ennemies. Faire
-               les transferts le long du chemin'''
+    Appel de cette fonction si l'on a assez d'unités.
 
-def prise_planete_prod(carte):
+    '''
     
-        '''A completer'''
+    nb_voisins, l_pla = carte.planetes_voisines("neutre", planete)
 
-def prise_voisins_isoles_ou_unique_ennemi_proche(carte):
-    '''Seulement si notre planete a plus d'unités off que lui de défense totale'''
-    mes_planetes=carte.mes_planetes()
-    defense=0
-    for i in mes_planetes:
-        if i.unique_ennemi_voisin(carte.id_joueur)!=False:
-            defense=i.unique_ennemi_voisin(carte.id_joueur).nb_off+i.unique_ennemi_voisin(carte.id_joueur).nb_def
-            if i.nb_off>defense:
-                toOrderMsg(carte.id_joueur,"choisir pourcentage",i,i.unique_ennemi_voisin(carte.id_joueur))
-                
+    if nb_voisins == 1:
+        unites_a_env = 100*carte.get_planete_by(l_pla[0]).getNb_def(carte) + carte.get_planete_by(l_pla[0]).getNb_off(carte)/planete.getNb_off(carte)
 
-        
- 
+        if unites_a_env > 100:
+            toOrderMsg(carte.id_joueur, 100, planete.identifiant, l_pla[0])
+        else:
+            toOrderMsg(carte.id_joueur, unites_a_env, planete.identifiant, l_pla[0])
         
             
 
+def conquete_planete_productrice_proche(carte, planete):
+    pass

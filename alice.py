@@ -2,8 +2,12 @@ from classes import *
 from protocole import *
 import maMap
 from poooc import *
+<<<<<<< Updated upstream
 import time
 from random import randint
+=======
+from strategie import *
+>>>>>>> Stashed changes
 
 def watchdog(carte):
     tabCouleur = ["blue","red","green","yellow","purple","orange"]
@@ -69,6 +73,7 @@ def ia(carte):
     while (not (carte.game_over or carte.end_of_game)):        #mise en place des stratégies et du robot
         mes_planetes=carte.mes_planetes(carte)
 
+<<<<<<< Updated upstream
         while len(carte.mes_planetes(carte)) != len(carte.liste_planetes):
             for planete in mes_planetes:
                 time.sleep(1)
@@ -92,3 +97,27 @@ def ia(carte):
 ##                    print("TO")
 ##                    print(carte.planete_voisines(planete)[i][1])
 ##                    toOrderMsg(carte.id_joueur,100, planete.identifiant, carte.planete_voisines(planete)[i][1])
+=======
+        
+        for planete in mes_planetes:
+            conquete_planete_solitaire_proche(carte, planete)
+
+            i = 0
+
+            while i < len(carte.planete_voisines(planete)) and carte.get_planete_by(carte.planete_voisines(planete)[i][1]).proprietaire == carte.couleur:
+                i += 1
+                
+                if i != len(carte.planete_voisines(planete)):
+                    toOrderMsg(carte.id_joueur,100, planete.identifiant, carte.planete_voisines(planete)[i][1])
+
+
+        report_unites(carte)
+
+
+
+
+
+
+
+
+>>>>>>> Stashed changes
