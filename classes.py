@@ -108,12 +108,12 @@ class Carte:
 
                             return planetes_ennemi
 
-            def mes_planetes(self,carte):
+            def mes_planetes(self):
             # Retourne la liste de nos planètes
                             mes_planetes = []
 
                             for planete in carte.liste_planetes:
-                                            if planete.getProprietaire(carte) == carte.couleur or planete.getProprietaire(carte) != 0:
+                                            if planete.getProprietaire(self) == carte.couleur:
                                                             mes_planetes.append(planete)
 
                             return mes_planetes
@@ -239,7 +239,7 @@ class Carte:
                             destination=flotte.getDestination()
                             return destination,taille_flotte
 
-            def planete_voisines(self,x): #retourne les voisins de la planete x
+            def planete_voisines(self,x): #retourne les voisins (identifiants) de la planete x (planete)
                             liste = []
                             for i in range (len(self.liste_aretes)):
                                             if x == self.liste_aretes[i].extremites[0]:
