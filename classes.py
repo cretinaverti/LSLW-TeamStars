@@ -65,7 +65,11 @@ class Carte:
 					
 					# on ajoute les voisins de la la planète courante;
 					_liste_ide_voisins = []
+<<<<<<< Updated upstream
 					for voisin in self.planete_voisines(planete):
+=======
+					for voisin in self.planetes_voisines("toutes", planete):
+>>>>>>> Stashed changes
 							_liste_ide_voisins.append(voisin[1])
 							
 					# on créer une liste de liste de voisins.
@@ -74,12 +78,20 @@ class Carte:
 					_liste_poids = []
 					# Cas ou l'on veut la distance.
 					if _type == "t_distances":
+<<<<<<< Updated upstream
 							for voisin in self.planete_voisines(planete):
+=======
+							for voisin in self.planetes_voisines("toutes", planete):
+>>>>>>> Stashed changes
 									_liste_poids.append(voisin[0])
 
 					# Cas ou l'on veut la somme des unités défensive et offensive.
 					elif _type == "t_unites":
+<<<<<<< Updated upstream
 							for voisin in self.planete_voisines(planete):
+=======
+							for voisin in self.planetes_voisines("toutes", planete):
+>>>>>>> Stashed changes
 									_liste_poids.append(self.get_planete_by(voisin[1]).getNb_def(self) + self.get_planete_by(voisin[1]).getNb_off(self))
 
 					liste_poids.append(_liste_poids)
@@ -101,6 +113,7 @@ class Carte:
 													extremites.append(planete)
 					return extremites
 
+<<<<<<< Updated upstream
 	def planetes_ennemi(self):
 	# Retourne la liste des planètes ennemies.
 					planetes_ennemi = []
@@ -121,6 +134,8 @@ class Carte:
 
 					return mes_planetes
 
+=======
+>>>>>>> Stashed changes
 
 
 	# Fonctions servant à implémenter l'agorithme de Dijskra.
@@ -203,17 +218,17 @@ class Carte:
 					return ret_pla
 
 
-	def planetes_productrices_a_prendre(self):
-					'''Vérifier la façon d'écrire le niveau de production'''
-					liste_2=[]
-					liste_3=[]
-					for planete in self.getListe_planetes:
-							if planete.getProprietaire!=self.getCouleur:
-									if planete.getCadence_prod==2:
-											liste_2.append(planete)
-									if planete.getCadence_prod==3:
-											liste_3.append(planete)
-					return (liste_3+liste_2)
+	def planetes_productrices(self):
+		'''Vérifier la façon d'écrire le niveau de production'''
+		liste_2=[]
+		liste_3=[]
+		for planete in self.liste_planetes:
+			if planete.getProprietaire(carte) != self.couleur:
+					if planete.cadence_prod == 2:
+						liste_2.append(planete)
+					if planete.cadence_prod == 3:
+						liste_3.append(planete)
+		return liste_3 + liste_2
 
 	def planete_attaque_rapide(self, planete_ennemie):
 					mes_planetes=self.mes_planetes()
@@ -230,14 +245,58 @@ class Carte:
 					destination=flotte.getDestination()
 					return destination,taille_flotte
 
-	def planete_voisines(self,x): #retourne les voisins de la planete x
-                liste = []
-                for i in range (len(self.liste_aretes)):
-                        if x.identifiant == self.liste_aretes[i].extremites[0]:
-                                liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[1]])
-                        elif x.identifiant == self.liste_aretes[i].extremites[1]:
-                                liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[0]])
-                return liste
+
+	def planetes_voisines(self, s_type, planete):
+		'''
+		Renvoie la liste des voisins:
+			amis si 	s_type = 'amies';
+			enemmis si 	s_type = 'ennemies';
+			neutre si 	s_type = 'neutre';
+			toutes si 	s_type = 'toutes'.
+		Renvoie égelement le nombre de voisins total de la planète.
+
+		'''
+		
+		liste = []
+		for i in range (len(self.liste_aretes)):
+				if x.identifiant == self.liste_aretes[i].extremites[0]:
+						liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[1]])
+				elif x.identifiant == self.liste_aretes[i].extremites[1]:
+						liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[0]])
+		
+			
+		ret = []
+
+		if s_type == 'amies':
+			for voisin in liste:
+				if self.get_planete_by(voisin).getProprietaire(carte) != self.getCouleur():
+					ret = liste.remove(voisin)
+		elif s_type == 'ennemies':
+			for voisin in liste:
+				if self.get_planete_by(voisin).getProprietaire(carte) == self.getCouleur():
+					ret = liste.remove(voisin):
+		elif s_type == 'neutre':
+			for voisin in liste:
+				if self.get_planete_by(voisin).getProprietaire(carte) != -1:
+					ret = liste.remove(voisin):
+		elif s_type == 'toutes':
+			ret = liste
+		
+		return len(liste), ret
+
+
+	def get_planetes_ennemies(self):
+
+		l_pla_enn = []
+
+		for pla in self.liste_planetes:
+			if pla.getProprietaire(self) != carte.couleur:
+				l_pla_enn.append(pla)
+
+		return l_pla_enn
+
+
+
 
 class Planete:
 	"""docstring for Cellule"""
@@ -296,31 +355,14 @@ class Planete:
 	# Sert à la méthode sort(); pour comparer les planetes entre elles, 
 	# et donc à trier les planètes suivnt ses critères... 
 	def __lt__(self, other):
-                return self.nb_def < other.nb_def
+				return self.nb_def < other.nb_def
 
 	def __gt__(self, other):
-                return self.nb_def > other.nb_def
+				return self.nb_def > other.nb_def
 
 	def __eq__(self, other):
-                return self.nb_def == other.nb_def
+				return self.nb_def == other.nb_def
 
-	def entouree_amis(self, couleur):
-
-			for voisin in self.liste_voisins:
-					if voisin.getProprietaire!=couleur:
-							return False
-			return True
-
-	def unique_ennemi_voisin(self, couleur):
-			compteur=0
-			ennemi=None
-			for voisin in self.getListe_voisins:
-					if voisin.getProprietaire!=couleur:
-							ennemi=voisin
-							compteur+=1
-					if compteur>1 or compteur==0:
-							return False
-			return ennemi
 
 	
 
@@ -352,13 +394,13 @@ class Planete:
 class Arete:
 	"""docstring for Arete"""
 	def __init__(self, distance, ide = None):
-                self.ide = ide
-                self.flotte_traverse = []
-                self.distance = distance
-                self.extremites = []
+				self.ide = ide
+				self.flotte_traverse = []
+				self.distance = distance
+				self.extremites = []
 
-                #données pour les déplacements sur l'interface graphique
-                self.flottes = []
+				#données pour les déplacements sur l'interface graphique
+				self.flottes = []
 
 	def getFlotte_traverse(self,carte):
 		carte.mutex.acquire()

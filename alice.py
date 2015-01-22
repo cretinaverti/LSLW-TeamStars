@@ -4,6 +4,7 @@ import maMap
 from poooc import *
 import time
 from random import randint
+from strategie import *
 
 def watchdog(carte):
     tabCouleur = ["blue","red","green","yellow","purple","orange"]
@@ -72,16 +73,17 @@ def ia(carte):
     print("b : ",b)
     while (not (carte.game_over or carte.end_of_game)):        #mise en place des stratégies et du robot
         mes_planetes=carte.mes_planetes(carte)
+        for planete in mes_planetes:
+            conquete_planete_solitaire_proche(carte, planete)
 
-        while len(carte.mes_planetes(carte)) != len(carte.liste_planetes):
-            for planete in mes_planetes:
-                time.sleep(1)
-                i = randint(0,len(carte.planete_voisines(planete))-1)
-                while (carte.get_planete_by(i) in mes_planetes and i not in b) or i == planete.identifiant:
-                    i = randint(0,len(carte.planete_voisines(planete)))
-                print("LE ORDER :")
-                print(planete.identifiant)
-                print("TO")
-                print(i)
-                #print(carte.planete_voisines(planete)[i][1])
-                toOrderMsg(carte.id_joueur,100, planete.identifiant, i)
+            i = 0
+
+            while i < len(carte.planete_voisines(planete)) and carte.get_planete_by(carte.planete_voisines(planete)[i][1]).proprietaire == carte.couleur:
+                i += 1
+                
+                if i != len(carte.planete_voisines(planete)):
+                    toOrderMsg(carte.id_joueur,100, planete.identifiant, carte.planete_voisines(planete)[i][1])
+
+
+        report_unites(carte)
+

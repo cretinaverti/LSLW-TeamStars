@@ -58,6 +58,8 @@ def init_pooo(init):
                 a.distance = int(re.match(".*@(.*)OF",i).group(1))
                 carte.liste_aretes.append(a)
 
+        carte.dict_distances = carte.graphe_dictionnaire_generator("t_distances")
+
         carte.threads.append(threading.Thread(target=maMap.boucle_principale, name="interface", args=(carte,)))
         carte.threads[0].start()
 
