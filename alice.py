@@ -2,12 +2,15 @@ from classes import *
 from protocole import *
 import maMap
 from poooc import *
+import time
 
 def watchdog(carte):
+    tabCouleur = ["blue","red","green","yellow","purple","orange"]
     while (not (carte.game_over or carte.end_of_game)):
         msg = state_on_update()
 
-        print(
+        
+        
         if 'GAMEOVER' in msg:
             #on voit si on est mort
             if Game_Over(msg) == carte.couleur:
@@ -28,8 +31,17 @@ def watchdog(carte):
             
             for new_planete in planetes:
                     p = carte.get_planete_by(new_planete.identifiant)
+                    p.proprietaire = new_planete.proprietaire
                     p.nb_off = new_planete.nb_off
                     p.nb_def = new_planete.nb_def
+                    #mise à jour de l'interface graphique
+                    if(p.proprietaire == -1):
+                        carte.map.itemconfigure(p.contour,outline="white")
+                    else:
+                        carte.map.itemconfigure(p.contour,outline=tabCouleur[p.proprietaire])
+                    carte.map.itemconfigure(p.off,text=p.nb_off)
+                    carte.map.itemconfigure(p.deff,text=p.nb_def)
+                    
 
             # mise à jour des moves
             #carte.liste_flottes = moves   # pas encore utilisé
@@ -38,9 +50,8 @@ def watchdog(carte):
             
             for new_arete in moves:
                     arete = carte.get_arete_by(new_arete.ide)
-                    arete.flottte_traverse = new_arete.flotte_traverse
+                    arete.flotte_traverse = new_arete.flotte_traverse
 
-            carte.carte_a_jour = False
             carte.mutex.release()
         else:
             print("ERREUR : message du serveur non reconnu\n\n")
@@ -57,5 +68,10 @@ def ia(carte):
             while i < len(carte.planete_voisines(planete)) and carte.get_planete_by(carte.planete_voisines(planete)[i][1]).proprietaire == carte.couleur:
                 i += 1
                 
-                if i != len(carte.planete_voisines(planete)):
-                    toOrderMsg(carte.id_joueur,100, planete.identifiant, carte.planete_voisines(planete)[i][1])
+            if i != len(carte.planete_voisines(planete)):
+                time.sleep(1)
+                print("LE ORDER :")
+                print(planete.identifiant)
+                print("TO")
+                print(carte.planete_voisines(planete)[i][1])
+                toOrderMsg(carte.id_joueur,100, planete.identifiant, carte.planete_voisines(planete)[i][1])

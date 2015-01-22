@@ -60,7 +60,7 @@ def getMoves(state):
             else:
                 f.direction = arete.extremites[0]
             f.nb_unite = int(re.match(".(\d+)\[",flotteS).group(1))
-            f.couleur = int(re.match(".*\[(\d+)\]",flotteS).group(1))
+            f.couleur = int(re.match(".*\[(.*)\]",flotteS).group(1))
             f.distance = int(re.match(".*@(\d+)$",flotteS).group(1))
             arete.flotte_traverse.append(f)
         tab.append(arete)

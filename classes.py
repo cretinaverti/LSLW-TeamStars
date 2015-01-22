@@ -19,10 +19,8 @@ class Carte:
 					
 
 					self.map = None # canevas de l'interface graphique
-					self.carte_a_jour = True #mis à false à chaque state
 					self.threads = [] #tableau des threads
 					self.mutex = threading.Lock() #exclusion mutuelle des attributs modifiés par le state
-					self.majMAP = False
 
 
 	def get_planete_by(self, id_planete):
@@ -113,7 +111,7 @@ class Carte:
 					mes_planetes = []
 
 					for planete in carte.liste_planetes:
-									if planete.getProprietaire(carte) == carte.couleur or planete.getProprietaire(carte) != 0:
+									if planete.getProprietaire(carte) == carte.couleur:
 													mes_planetes.append(planete)
 
 					return mes_planetes
