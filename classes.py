@@ -366,6 +366,9 @@ class Arete:
                             self.distance = distance
                             self.extremites = []
 
+                            #données pour les déplacements sur l'interface graphique
+                            self.flottes = []
+
             def getFlotte_traverse(self,carte):
                 carte.mutex.acquire()
                 x = self.flotte_traverse
