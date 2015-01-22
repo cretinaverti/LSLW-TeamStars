@@ -228,13 +228,13 @@ class Carte:
 					return destination,taille_flotte
 
 	def planete_voisines(self,x): #retourne les voisins de la planete x
-					liste = []
-					for i in range (len(self.liste_aretes)):
-									if x == self.liste_aretes[i].extremites[0]:
-													liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[1]])
-									elif x == self.liste_aretes[i].extremites[1]:
-													liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[0]])
-					return liste
+                liste = []
+                for i in range (len(self.liste_aretes)):
+                        if x.identifiant == self.liste_aretes[i].extremites[0]:
+                                liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[1]])
+                        elif x.identifiant == self.liste_aretes[i].extremites[1]:
+                                liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[0]])
+                return liste
 
 class Planete:
 	"""docstring for Cellule"""
@@ -293,13 +293,13 @@ class Planete:
 	# Sert à la méthode sort(); pour comparer les planetes entre elles, 
 	# et donc à trier les planètes suivnt ses critères... 
 	def __lt__(self, other):
-					return self.nb_def < other.nb_def
+                return self.nb_def < other.nb_def
 
 	def __gt__(self, other):
-					return self.nb_def > other.nb_def
+                return self.nb_def > other.nb_def
 
 	def __eq__(self, other):
-					return self.nb_def == other.nb_def
+                return self.nb_def == other.nb_def
 
 	def entouree_amis(self, couleur):
 
@@ -349,13 +349,13 @@ class Planete:
 class Arete:
 	"""docstring for Arete"""
 	def __init__(self, distance, ide = None):
-					self.ide = ide
-					self.flotte_traverse = []
-					self.distance = distance
-					self.extremites = []
+                self.ide = ide
+                self.flotte_traverse = []
+                self.distance = distance
+                self.extremites = []
 
-                                        #données pour les déplacements sur l'interface graphique
-                                        self.flottes = []
+                #données pour les déplacements sur l'interface graphique
+                self.flottes = []
 
 	def getFlotte_traverse(self,carte):
 		carte.mutex.acquire()

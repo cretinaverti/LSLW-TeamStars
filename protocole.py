@@ -75,7 +75,7 @@ state = "STATE20ac18ab-6d18-450e-94af-bee53fdc8fcaIS2;3CELLS:1[2]12'4,2[2]15'2,3
 
 # Retourne une chaine de caractère conforme au protocole ORDER
 def toOrderMsg(notre_id,pourcentage,cellule_depart,cible):
-    poooc.order("["+str(notre_id)+"]MOV"+str(pourcentage)+"FROM"+cellule_depart+"TO"+cible)
+    poooc.order("["+notre_id+"]MOV"+str(pourcentage)+"FROM"+str(cellule_depart)+"TO"+str(cible))
 
 
 def Game_Over(state):
