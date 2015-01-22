@@ -4,6 +4,8 @@ import maMap
 from poooc import *
 
 def watchdog(carte):
+    
+    tabCouleur = ["blue","red","green","yellow","purple","orange"]
     while (not (carte.game_over or carte.end_of_game)):
         msg = state_on_update()
 
@@ -27,8 +29,16 @@ def watchdog(carte):
             
             for new_planete in planetes:
                     p = carte.get_planete_by(new_planete.identifiant)
+                    p.proprietaire = new_planete.proprietaire
+                    if(p.proprietaire == -1):
+                        carte.map.itemconfig(p.contour,outline="white")
+                    else:
+                        carte.map.itemconfig(p.contour,outline=tabCouleur[p.proprietaire])
                     p.nb_off = new_planete.nb_off
+                    carte.map.itemconfig(p.off,text=str(p.nb_off))
                     p.nb_def = new_planete.nb_def
+                    carte.map.itemconfig(p.deff,text=str(p.nb_def))
+
 
             # mise à jour des moves
             #carte.liste_flottes = moves   # pas encore utilisé
