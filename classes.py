@@ -226,9 +226,9 @@ class Carte:
 		liste = []
 		for i in range (len(self.liste_aretes)):
 				if planete.identifiant == self.liste_aretes[i].extremites[0]:
-						liste.append(self.liste_aretes[i].extremites[1])
+					liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[1]])
 				elif planete.identifiant == self.liste_aretes[i].extremites[1]:
-						liste.append([self.liste_aretes[i].extremites[0]])
+					liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[0]])
 		
 			
 		ret = []
