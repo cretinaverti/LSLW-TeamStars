@@ -266,7 +266,7 @@ class Carte:
 		for planete in self.liste_planetes():
 			if planete.getProprietaire(self)==self.couleur:
 				mes_plan.append(planete)
-	return mes_plan
+		return mes_plan
 
 
 
