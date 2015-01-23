@@ -57,7 +57,7 @@ def conquete_planetes_productrices(carte):
 
 #1) planetes productrices proches des miennes
     for planete in liste_pla_prod:
-        _,voisines=carte.planete_voisines('amies', planete)
+        _,voisines=carte.planetes_voisines('amies', planete)
         for voisine in voisines:
             nb_a_envoyer= 100*(planete.getNb_def(carte) + planete.getNb_off(carte))/carte.get_planet_by(voisine).getNb_off(carte)
 
@@ -66,7 +66,7 @@ def conquete_planetes_productrices(carte):
 
 #2) planetes prod éloignées des miennes
     for pla in liste_pla_prod:
-        if carte.planete_voisines('neutre', pla)==carte.planete_voisines('toutes', pla):
+        if carte.planetes_voisines('neutre', pla)==carte.planetes_voisines('toutes', pla):
             #a) recherche de ma planete la plus proche de la planete prod examinée
             cout_1, chemin_2=chemin_le_moins_couteux(pla.identifiant, carte.mes_planetes()[0])
             for pla_m in carte.mes_planetes():
@@ -96,7 +96,7 @@ def conquete_planetes_productrices(carte):
                 j=0
                 for plapla in chemin_1:
                     j+=1 #Permet d'accéder à la planète d'après
-                    if carte.planete_voisines('amies', carte.get_planete_by(plapla))==carte.planete_voisines('toutes', carte.get_planete_by(plapla)):
+                    if carte.planetes_voisines('amies', carte.get_planete_by(plapla))==carte.planetes_voisines('toutes', carte.get_planete_by(plapla)):
                         toOrderMsg(carte.id_joueur, 100, plapla, chemin_1[j])
                     else:
                         nb_a_envoyer_2=100*(carte.get_planete_by(chemin_1[j]).getNb_def(carte) + carte.get_planete_by(chemin_1[j]).getNb_off(carte))/carte.get_planete_by(plapla).getNb_off(carte)
@@ -111,7 +111,7 @@ def offensive_vague(carte):
     for pla in mes_planetes:
         #trouver voisin le moins défendu de ma planete examinée
             #initialisation super relou :(
-        _,pp=carte.planete_voisines('ennemies', pla)
+        _,pp=carte.planetes_voisines('ennemies', pla)
         defense=carte.get_planete_by(pp[0]).getNb_off(carte)+carte.get_planete_by(pp[0]).getNb_def(carte)
         for voisin in pp:
             
@@ -149,7 +149,7 @@ def offensive_bourrin(carte):
         for planete in mes_planetes:
 
             i = 0
-            l,liste=carte.planete_voisines('toutes',planete)
+            l,liste=carte.planetes_voisines('toutes',planete)
             while i < l and carte.get_planete_by(liste[i]).getProprietaire(carte) == carte.couleur:
                 i += 1
                 
@@ -166,7 +166,7 @@ def offensive_vague_neutre(carte):
     for pla in mes_planetes:
         #trouver voisin neutre le moins défendu de ma planete examinée
             #initialisation super relou :(
-        _,pp=carte.planete_voisines('neutre', pla)
+        _,pp=carte.planetes_voisines('neutre', pla)
         defense=carte.get_planete_by(pp[0]).getNb_off(carte)+carte.get_planete_by(pp[0]).getNb_def(carte)
         for voisin in pp:
             

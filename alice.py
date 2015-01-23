@@ -71,7 +71,6 @@ def ia(carte):
 		mes_planetes=carte.mes_planetes(carte)
 
 		while len(carte.mes_planetes(carte)) != len(carte.liste_planetes):
-	 
 		
 			for planete in mes_planetes:
 				conquete_planete_solitaire_proche(carte, planete)
@@ -80,6 +79,7 @@ def ia(carte):
 
 				while i < len(carte.planete_voisines(planete)) and carte.get_planete_by(carte.planete_voisines(planete)[i][1]).proprietaire == carte.couleur:
 					i += 1
+					time.sleep(1)
 					
 					if i != len(carte.planete_voisines(planete)):
 						toOrderMsg(carte.id_joueur,100, planete.identifiant, carte.planete_voisines(planete)[i][1])
