@@ -224,7 +224,7 @@ class Carte:
 		'''
 		
 		liste = []
-		for pla in carte.liste_planetes:
+		for pla in self.liste_planetes:
 			if pla == planete:
 				for voisin in pla.liste_voisins:
 					liste.append(voisin[1])
