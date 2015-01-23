@@ -60,7 +60,7 @@ def watchdog(carte):
 			print(msg)
 
 
-def ia(carte):
+ddef ia(carte):
 	print("ICIIIIIIIIIIIIIIIIII")
 	'''carte.dict_distances = carte.graphe_dictionnaire_generator("t_distances")
 	print(carte.dict_distances)
@@ -81,18 +81,6 @@ def ia(carte):
 		
 
 		#	report_unites(carte)
-
-
-
-
-			
-			_, pla_vois=carte.planetes_voisines('ennemies', planete)
-			time.sleep(5)
-			toOrderMsg(carte.id_joueur,100, planete.identifiant, pla_vois[0])
-		
-
-		#	report_unites(carte)
-
 
 
 
