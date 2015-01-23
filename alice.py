@@ -73,6 +73,19 @@ def ia(carte):
 				#conquete_planete_solitaire_proche(carte, planete)
 
 			
+			pla_vois=planete.liste_voisins
+			i=0			
+			while i<len(pla_vois) and carte.get_planete_by(pla_vois[i][1]).getProprietaire(carte)==carte.couleur:
+				i+=1
+			toOrderMsg(carte.id_joueur,100, planete.identifiant, pla_vois[i][1])
+		
+
+		#	report_unites(carte)
+
+
+
+
+			
 			_, pla_vois=carte.planetes_voisines('ennemies', planete)
 			time.sleep(5)
 			toOrderMsg(carte.id_joueur,100, planete.identifiant, pla_vois[0])
