@@ -60,7 +60,7 @@ def watchdog(carte):
 			print(msg)
 
 
-ddef ia(carte):
+def ia(carte):
 	print("ICIIIIIIIIIIIIIIIIII")
 	'''carte.dict_distances = carte.graphe_dictionnaire_generator("t_distances")
 	print(carte.dict_distances)
