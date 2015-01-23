@@ -90,7 +90,7 @@ def ia(carte):
 					if carte.get_planete_by(l_pl[r][1]).getProprietaire(carte)==carte.couleur:
 						l_pl_amies.append(l_pl[r][1])
 					else:
-						l_pl_amies.append(l_pl[r][1]
+						l_pl_enn.append(l_pl[r][1])
 
 					r+=1
 		
