@@ -60,7 +60,7 @@ def watchdog(carte):
 			print(msg)
 
 
-ddef ia(carte):
+def ia(carte):
 	print("ICIIIIIIIIIIIIIIIIII")
 	'''carte.dict_distances = carte.graphe_dictionnaire_generator("t_distances")
 	print(carte.dict_distances)
@@ -79,8 +79,46 @@ ddef ia(carte):
 				i+=1
 			toOrderMsg(carte.id_joueur,100, planete.identifiant, pla_vois[i][1])
 		
+#deplacements internes
+			for pla in carte.liste_planetes:
+#liste des voisines amies d'un coté et ennemies de l'autre :)
+				l_pl=pla.liste_voisins
+				l_pl_amies=[]
+				l_pl_enn=[]
+				r=0
+				while r<len(l_pl):
+					if carte.get_planete_by(l_pl[r][1]).getProprietaire(carte)==carte.couleur:
+						l_pl_amies.append(l_pl[r][1])
+					else:
+						l_pl_amies.append(l_pl[r][1]
 
-		#	report_unites(carte)
+					r+=1
+		
+				#Vide les planetes isolées
+        			if len(l_pl) == 1:
+            				toOrderMsg(carte.id_joueur, 100, pla.identifiant, l_pl[0])
+
+				#Autre
+        			cout_1, l_ennemis_la_plus_proche_1 = carte.chemin_le_moins_couteux(pla.identifiant, l_pl_enn[0])
+        			for pl in l_pl_enn:
+            				cout_2, l_ennemis_la_plus_proche_2 = carte.chemin_le_moins_couteux(pla.identifiant, pl)
+            				if cout_2 < cout_1:
+                				cout_1 = cout_2
+                				l_ennemis_la_plus_proche_1 = l_ennemis_la_plus_proche_2
+				#Attaque
+        			for destination in l_ennemis_la_plus_proche_1:
+					l_vois_dest=destination.liste_voisins
+					z=1
+				while z<len(l_vois_dest) and carte.get_planete_by(l_vois_dest[z][1]).getProprietaire(carte)==carte.couleur:
+					z+=1
+				if z==len(l_vois_dest):
+					toOrderMsg(carte.id_joueur, 100, pla.identifiant, destination)
+				else:
+					break
+        		toOrderMsg(carte.id_joueur, 100, pla.identifiant, destination)
+
+
+
 
 
 
