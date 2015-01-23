@@ -2,7 +2,7 @@ from classes import *
 from protocole import *
 from tkinter import *
 import re
-#import alice
+import alice
 import maMap
 import threading
 import time
