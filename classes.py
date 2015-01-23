@@ -261,10 +261,10 @@ class Carte:
 
 		return l_pla_enn
 
-	def mes_planetes(self, carte):
+	def mes_planetes(self):
 		mes_planetes=[]
 		for planete in carte.liste_planetes():
-			if planete.getProprietaire(carte)==carte.couleur:
+			if planete.getProprietaire(self)==carte.couleur:
 				mes_planetes.append(planete)
 		return mes_planetes
 
