@@ -226,20 +226,20 @@ class Carte:
 		liste = []
 		for i in range (len(self.liste_aretes)):
 				if planete.identifiant == self.liste_aretes[i].extremites[0]:
-						liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[1]])
+						liste.append(self.liste_aretes[i].extremites[1])
 				elif planete.identifiant == self.liste_aretes[i].extremites[1]:
-						liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[0]])
+						liste.append([self.liste_aretes[i].extremites[0]])
 		
 			
 		ret = []
 
 		if s_type == 'amies':
 			for voisin in liste:
-				if self.get_planete_by(voisin).getProprietaire(carte) != self.getCouleur():
+				if self.get_planete_by(voisin).getProprietaire(carte) != self.couleur():
 					ret = liste.remove(voisin)
 		elif s_type == 'ennemies':
 			for voisin in liste:
-				if self.get_planete_by(voisin).getProprietaire(carte) == self.getCouleur():
+				if self.get_planete_by(voisin).getProprietaire(carte) == self.couleur():
 					ret = liste.remove(voisin)
 		elif s_type == 'neutre':
 			for voisin in liste:
@@ -262,9 +262,9 @@ class Carte:
 		return l_pla_enn
 
 	def mes_planetes(self):
-		mes_planetes = []
-		for planete in self.liste_planetes():
-			if planete.getProprietaire(self) == self.couleur:
+		mes_planetes=[]
+		for planete in self.liste_planetes:
+			if planete.getProprietaire(self)==self.couleur:
 				mes_planetes.append(planete)
 		return mes_planetes
 
@@ -397,5 +397,6 @@ class Flotte:
 					self.distance = 0
 
 					self.position_courante = 0
+							
 							
 							
