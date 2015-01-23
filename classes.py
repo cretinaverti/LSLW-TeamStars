@@ -224,12 +224,10 @@ class Carte:
 		'''
 		
 		liste = []
-		for i in range (len(self.liste_aretes)):
-				if planete.identifiant == self.liste_aretes[i].extremites[0]:
-						liste.append(self.liste_aretes[i].extremites[1])
-				elif planete.identifiant == self.liste_aretes[i].extremites[1]:
-						liste.append([self.liste_aretes[i].extremites[0]])
-		
+		for pla in carte.liste_planetes:
+			if pla = planete:
+				for voisin in pla.liste_voisins:
+					liste.append(voisin[1]
 			
 		ret = []
 
