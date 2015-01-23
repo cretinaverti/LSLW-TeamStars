@@ -120,7 +120,23 @@ def offensive_vague(carte):
                 defense=def_1
                 vois=voisin
             #attaque du voisin le plus faible (que si ma planete est plus forte)
-            nb_a_envoyer_2=100*(carte.get_planete_by(vois).getNb_def(carte) + carte.get_planete_by(vois).getNb_off(carte))/pla.getNb_off(carte)
+        #détermination unités à envoyer (voir si liste_aretes existe et si la cadence est remplie...)
+        i=0
+        while (carte.liste_aretes[i].extremites[0]!=pla.identifiant or carte.liste_aretes[i].extremites[1]!=pla.identifiant) and (carte.liste_aretes[i].extremites[0]!=vois or carte.liste_aretes[i].extremites[1]!=vois):
+            i+=1
+        cad=vois.cadence_prod
+        if cad==3:
+            mult=1
+        elif cad==2:
+            mult=2/3
+        else:
+            mult=1/2
+
+        sup=carte.liste_arete[i].distance*(mult+1/2) #sup=production supplementaire pendant déplacement(mult pour prod offensive, 1/2 pour prod défensive)
+        nb_a_envoyer_2=100*(carte.get_planete_by(vois).getNb_def(carte) + carte.get_planete_by(vois).getNb_off(carte) + sup)/pla.getNb_off(carte)
+        #Si manque d'infos ou erreur difficile à corriger, remplacer de i=0 jusqu'à la ligne au-dessus d'ici par:
+        #nb_a_envoyer_2=100*(carte.get_planete_by(vois).getNb_def(carte) + carte.get_planete_by(vois).getNb_off(carte))/pla.getNb_off(carte)
+
         if nb_a_envoyer<100:
             toOrderMsg(carte.id_joueur, nb_a_envoyer, pla.identifiant, vois)
 
@@ -139,3 +155,37 @@ def offensive_bourrin(carte):
                 
                 if i != l:
                     toOrderMsg(carte.id_joueur,100, planete.identifiant, liste[i])
+
+#considère qu'il existe carte.liste_aretes donc inutile si ce n'est pas le cas...
+#attend avant de conquérir une planete neutre si elle est attaquée
+                    #utilise le getteur flotte
+                    
+def offensive_vague_neutre(carte):
+    mes_planetes=carte.mes_planetes()
+    
+    for pla in mes_planetes:
+        #trouver voisin neutre le moins défendu de ma planete examinée
+            #initialisation super relou :(
+        _,pp=carte.planete_voisines('neutre', pla)
+        defense=carte.get_planete_by(pp[0]).getNb_off(carte)+carte.get_planete_by(pp[0]).getNb_def(carte)
+        for voisin in pp:
+            
+            def_1=carte.get_planete_by(voisin).getNb_off(carte)+carte.get_planete_by(voisin).getNb_def(carte)
+            if def_1<defense:
+                defense=def_1
+                vois=voisin
+        #fonction d'attaque avec attente
+        for arete in carte.liste_aretes:
+            if arete.extremites[0]==vois or arete.extremites[1]==vois:
+                f= arete.getFlotte_traverse(carte)
+                if len(f)>0:
+                    #voir si c'est correct et judicieux...
+                    #le /2 c'est parce que j'ai la flemme de chercher la longueur de l'arete ma_planete---planete_neutre
+                    time.sleep(arete.distance/2)
+        #a voir si  c'est bien calculé :p...
+            for i in f:
+                if i.couleur
+                som_flottes+=i.nb_unites
+            nb_a_envoyer=100*(carte.get_planete_by(vois).getNb_def(carte) + carte.get_planete_by(vois).getNb_off(carte)+som_flottes)/pla.getNb_off(carte)
+            if nb_a_envoyer<100:
+                toOrderMsg(carte.id_joueur, nb_a_envoyer, pla.identifiant, vois)
