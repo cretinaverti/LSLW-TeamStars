@@ -60,11 +60,8 @@ class Carte:
 					
 					# on ajoute les voisins de la la planète courante;
 					_liste_ide_voisins = []
-<<<<<<< Updated upstream
-					for voisin in self.planete_voisines(planete):
-=======
-					for voisin in self.planetes_voisines("toutes", planete):
->>>>>>> Stashed changes
+
+					for voisin in planete.liste_voisins:
 							_liste_ide_voisins.append(voisin[1])
 							
 					# on créer une liste de liste de voisins.
@@ -73,21 +70,13 @@ class Carte:
 					_liste_poids = []
 					# Cas ou l'on veut la distance.
 					if _type == "t_distances":
-<<<<<<< Updated upstream
-							for voisin in self.planete_voisines(planete):
-=======
-							for voisin in self.planetes_voisines("toutes", planete):
->>>>>>> Stashed changes
+							for voisin in planete.liste_voisins:
 									_liste_poids.append(voisin[0])
 
 					# Cas ou l'on veut la somme des unités défensive et offensive.
 					elif _type == "t_unites":
-<<<<<<< Updated upstream
-							for voisin in self.planete_voisines(planete):
-=======
-							for voisin in self.planetes_voisines("toutes", planete):
->>>>>>> Stashed changes
-									_liste_poids.append(self.get_planete_by(voisin[1]).getNb_def(self) + self.get_planete_by(voisin[1]).getNb_off(self))
+							for voisin in planete.liste_voisins:
+								_liste_poids.append(self.get_planete_by(voisin[1]).getNb_def(self) + self.get_planete_by(voisin[1]).getNb_off(self))
 
 					liste_poids.append(_liste_poids)
 			
@@ -108,29 +97,6 @@ class Carte:
 													extremites.append(planete)
 					return extremites
 
-<<<<<<< Updated upstream
-	def planetes_ennemi(self):
-	# Retourne la liste des planètes ennemies.
-					planetes_ennemi = []
-
-					for planete in self.liste_planetes:
-									if planete.getProprietaire != self.getCouleur or planete.getProprietaire != 0:
-													planetes_ennemi.append(planete)
-
-					return planetes_ennemi
-
-	def mes_planetes(self,carte):
-	# Retourne la liste de nos planètes
-					mes_planetes = []
-
-					for planete in carte.liste_planetes:
-									if planete.getProprietaire(carte) == carte.couleur:
-													mes_planetes.append(planete)
-
-					return mes_planetes
-
-=======
->>>>>>> Stashed changes
 
 
 	# Fonctions servant à implémenter l'agorithme de Dijskra.
@@ -254,9 +220,9 @@ class Carte:
 		
 		liste = []
 		for i in range (len(self.liste_aretes)):
-				if x.identifiant == self.liste_aretes[i].extremites[0]:
+				if planete.identifiant == self.liste_aretes[i].extremites[0]:
 						liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[1]])
-				elif x.identifiant == self.liste_aretes[i].extremites[1]:
+				elif planete.identifiant == self.liste_aretes[i].extremites[1]:
 						liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[0]])
 		
 			
@@ -269,11 +235,11 @@ class Carte:
 		elif s_type == 'ennemies':
 			for voisin in liste:
 				if self.get_planete_by(voisin).getProprietaire(carte) == self.getCouleur():
-					ret = liste.remove(voisin):
+					ret = liste.remove(voisin)
 		elif s_type == 'neutre':
 			for voisin in liste:
 				if self.get_planete_by(voisin).getProprietaire(carte) != -1:
-					ret = liste.remove(voisin):
+					ret = liste.remove(voisin)
 		elif s_type == 'toutes':
 			ret = liste
 		
@@ -402,6 +368,12 @@ class Arete:
 		x = self.flotte_traverse
 		carte.mutex.release()
 		return x
+
+	def getAutreExtremite(self, ide_pla):
+		if ide_pla == self.extremites[0]:
+			return self.extremites[1]
+		elif ide_pla == self.extremites[1]:
+			return self.extremites[0]
 
 
 class Flotte:
