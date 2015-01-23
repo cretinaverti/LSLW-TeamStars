@@ -184,8 +184,8 @@ def offensive_vague_neutre(carte):
                     time.sleep(arete.distance/2)
         #a voir si  c'est bien calculé :p...
             for i in f:
-                if i.couleur
-                som_flottes+=i.nb_unites
+                if i.couleur:
+                    som_flottes+=i.nb_unites
             nb_a_envoyer=100*(carte.get_planete_by(vois).getNb_def(carte) + carte.get_planete_by(vois).getNb_off(carte)+som_flottes)/pla.getNb_off(carte)
             if nb_a_envoyer<100:
                 toOrderMsg(carte.id_joueur, nb_a_envoyer, pla.identifiant, vois)

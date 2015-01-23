@@ -7,7 +7,6 @@ from random import randint
 from strategie import *
 
 def watchdog(carte):
-<<<<<<< HEAD
 	tabCouleur = ["blue","red","green","yellow","purple","orange"]
 	while (not (carte.game_over or carte.end_of_game)):
 		msg = state_on_update()
