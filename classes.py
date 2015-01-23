@@ -22,6 +22,11 @@ class Carte:
 					self.threads = [] #tableau des threads
 					self.mutex = threading.Lock() #exclusion mutuelle des attributs modifiés par le state
 
+	def get_arete_by_extremites(self, arete):
+                for testArete in self.liste_aretes:
+                        if (arete.extremites[0] in testArete.extremites and arete.extremites[1] in testArete.extremites):
+                                return testArete.ide
+
 
 	def get_planete_by(self, id_planete):
 			for pla in self.liste_planetes:
@@ -374,6 +379,7 @@ class Arete:
 			return self.extremites[1]
 		elif ide_pla == self.extremites[1]:
 			return self.extremites[0]
+
 
 
 class Flotte:
