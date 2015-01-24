@@ -81,8 +81,8 @@ def ia(carte):
 		
 
 			vid_pla_is(carte)
-			vid_pla_protegees(carte)
-
+			vid_pla_protegees_autre(carte)
+			'''Si ces deux fonctions marchent, tenter de les remplacer par la fonction vid_pla, la même mais en une seule fonction'''
 
 
 
