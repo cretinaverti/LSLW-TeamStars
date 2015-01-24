@@ -1,6 +1,29 @@
 from classes import *
 from protocole import *
 
+def vid_pla_is(carte):
+    mes_pla=carte.liste_planetes
+    for pla in mes_pla:
+        voisines=pla.liste_voisins
+        if len(voisines)==1:'''Vérifie que la planète est isolée'''
+            toOrderMsg(carte.id_joueur, 100, pla.identifiant, voisines[0])
+
+'''Vider les planetes sécurisées mais non isolées: cas au moins une planete voisines est non sécurisée. ex: 1(moi)__2(moi)___3(moi)__4(moi)__5(autre)
+L'algo peut transférer de 3 vers 4 mais pas de 2 vers 3. Avec l'algo précédent, on peut effectuer le déplacement 1 vers 2.
+Pour le cas 2 vers 3 il faut connaitre le chemin.'''
+
+def vid_pla_protegees(carte):
+    mes_pla=carte.liste_planetes
+    for pla in mes_pla:
+        voisines=pla.liste_voisins
+        vois_amies=carte.planetes_voisines('amies', pla)
+        if len(voisines)==len(vois_amies): '''N'effectue les ordres que si la planete n'est entourée que de planètes amies'''
+        '''J'utilise un while car voisines est une liste de listes'''
+        i=0
+        while i<len(voisines) and carte.planetes_voisines('amies', carte.get_planete_by(voisines[i][1]))==carte.get_planete_by(voisines[i][1]).liste_voisins: '''Ignore les voisines amies entourées d'amies'''
+            i+=1
+         if i<len(voisines):
+            toOrderMsg(carte.id_joueur, 100, pla.identifiant, destination) '''Envoie vers la 1ère planète voisine amie non-entourée d'amies'''
 
 def report_unites(carte):
 
