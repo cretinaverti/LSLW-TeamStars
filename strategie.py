@@ -15,10 +15,10 @@ def report_unites(carte):
 
         cout_1, l_ennemis_la_plus_proche_1 = carte.chemin_le_moins_couteux(pla.identifiant, l_pla_enn[0])
         for pla_enn in l_pla_enn:
-                cout_2, l_ennemis_la_plus_proche_2 = carte.chemin_le_moins_couteux(pla.identifiant, pla_enn.identifiant)
-                    if cout_2 < cout_1:
-                        cout_1 = cout_2
-                        l_ennemis_la_plus_proche_1 = l_ennemis_la_plus_proche_2
+            cout_2, l_ennemis_la_plus_proche_2 = carte.chemin_le_moins_couteux(pla.identifiant, pla_enn.identifiant)
+            if cout_2 < cout_1:
+                cout_1 = cout_2
+                l_ennemis_la_plus_proche_1 = l_ennemis_la_plus_proche_2
 
         for destination in l_ennemis_la_plus_proche_1:
             _, l_pla_vois_enn = carte.planete_voisines('ennemies', carte.get_by_planete(destination))
