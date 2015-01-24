@@ -66,8 +66,8 @@ class Carte:
 					# on ajoute les voisins de la la planète courante;
 					_liste_ide_voisins = []
 
-					for voisin in self.planetes_voisines("toutes", planete):
-							_liste_ide_voisins.append(voisin)
+					for voisin in planete.liste_voisins:
+							_liste_ide_voisins.append(voisin[1])
 							
 					# on créer une liste de liste de voisins.
 					liste_ide_voisins.append(_liste_ide_voisins)
@@ -75,13 +75,13 @@ class Carte:
 					_liste_poids = []
 					# Cas ou l'on veut la distance.
 					if _type == "t_distances":
-							for voisin in self.planetes_voisines("toutes", planete):
-									_liste_poids.append(voisin)
+							for voisin in planete.liste_voisins:
+									_liste_poids.append(voisin[0])
 
 					# Cas ou l'on veut la somme des unités défensive et offensive.
 					elif _type == "t_unites":
-							for voisin in self.planetes_voisines("toutes", planete):
-									_liste_poids.append(self.get_planete_by(voisin[1]).getNb_def(self) + self.get_planete_by(voisin[1]).getNb_off(self))
+							for voisin in planete.liste_voisins:
+								_liste_poids.append(self.get_planete_by(voisin[1]).getNb_def(self) + self.get_planete_by(voisin[1]).getNb_off(self))
 
 					liste_poids.append(_liste_poids)
 			
@@ -103,6 +103,7 @@ class Carte:
 					return extremites
 
 
+
 	# Fonctions servant à implémenter l'agorithme de Dijskra.
 	def affiche_peres(self, pere, id_planete_A, extremite, trajet):
 			
@@ -121,7 +122,6 @@ class Carte:
 			distances		: dictionnaire.
 			pere			: dictionnaire.
 			id_planete_A	: entier.
-
 			'''
 
 			try:
@@ -219,26 +219,23 @@ class Carte:
 			neutre si 	s_type = 'neutre';
 			toutes si 	s_type = 'toutes'.
 		Renvoie égelement le nombre de voisins total de la planète.
-
 		'''
 		
 		liste = []
-		for i in range (len(self.liste_aretes)):
-				if planete.identifiant == self.liste_aretes[i].extremites[0]:
-						liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[1]])
-				elif planete.identifiant == self.liste_aretes[i].extremites[1]:
-						liste.append([self.liste_aretes[i].distance,self.liste_aretes[i].extremites[0]])
-		
+		for pla in self.liste_planetes:
+			if pla == planete:
+				for voisin in pla.liste_voisins:
+					liste.append(voisin[1])
 			
 		ret = []
 
 		if s_type == 'amies':
 			for voisin in liste:
-				if self.get_planete_by(voisin).getProprietaire(carte) != self.getCouleur():
+				if self.get_planete_by(voisin).getProprietaire(carte) != self.couleur():
 					ret = liste.remove(voisin)
 		elif s_type == 'ennemies':
 			for voisin in liste:
-				if self.get_planete_by(voisin).getProprietaire(carte) == self.getCouleur():
+				if self.get_planete_by(voisin).getProprietaire(carte) == self.couleur():
 					ret = liste.remove(voisin)
 		elif s_type == 'neutre':
 			for voisin in liste:
@@ -260,6 +257,12 @@ class Carte:
 
 		return l_pla_enn
 
+	def mes_planetes(self):
+		mes_planetes=[]
+		for planete in self.liste_planetes:
+			if planete.getProprietaire(self)==self.couleur:
+				mes_planetes.append(planete)
+		return mes_planetes
 
 
 
@@ -373,6 +376,12 @@ class Arete:
 		carte.mutex.release()
 		return x
 
+	def getAutreExtremite(self, ide_pla):
+		if ide_pla == self.extremites[0]:
+			return self.extremites[1]
+		elif ide_pla == self.extremites[1]:
+			return self.extremites[0]
+
 
 
 class Flotte:
@@ -384,5 +393,3 @@ class Flotte:
 					self.distance = 0
 
 					self.position_courante = 0
-							
-							
