@@ -8,30 +8,19 @@ def vid_pla_is(carte):
         if len(voisines)==1:'''Vérifie que la planète est isolée'''
             toOrderMsg(carte.id_joueur, 100, pla.identifiant, voisines[0])
 
-'''Vider les planetes sécurisées mais non isolées: cas au moins une planete voisines est non sécurisée. ex: 1(moi)__2(moi)___3(moi)__4(moi)__5(autre)
-L'algo peut transférer de 3 vers 4 mais pas de 2 vers 3. Avec l'algo précédent, on peut effectuer le déplacement 1 vers 2.
-Pour le cas 2 vers 3 il faut connaitre le chemin.'''
 
-def vid_pla_protegees(carte):
-    mes_pla=carte.liste_planetes
-    for pla in mes_pla:
-        voisines=pla.liste_voisins
-        vois_amies=carte.planetes_voisines('amies', pla)
-        if len(voisines)==len(vois_amies): '''N'effectue les ordres que si la planete n'est entourée que de planètes amies'''
-        '''J'utilise un while car voisines est une liste de listes'''
-        i=0
-        while i<len(voisines) and carte.planetes_voisines('amies', carte.get_planete_by(voisines[i][1]))==carte.get_planete_by(voisines[i][1]).liste_voisins: '''Ignore les voisines amies entourées d'amies'''
-            i+=1
-         if i<len(voisines):
-            toOrderMsg(carte.id_joueur, 100, pla.identifiant, destination) '''Envoie vers la 1ère planète voisine amie non-entourée d'amies'''
+'''La fonction qui suit s'occupe de mes planetes entourées d'amies (1er if). Elle cherche la planete ennemie la plus proche
+et son chemin (2eme for). Elle étudie le trajet et expédie de la planete i-1 du chemin à la planète i (xhile)si i est 
+entourée d'amies. A la 1ère planète du chemin qui ne nous appartient pas ou qui n'est pas entourée d'amies, les envois 
+s'arrêtent (sortie while). On refait un order pour: cas1= fournir notre 1ère planète non-entourée d'amies, cas2= attaquer la
+planète ennemie(qui est la destination si j'ai bien réfléchi :p)'''.
 
-'''Dernier cas à étudier: si la planète est entourée d'amies, elles-même entourées d'amies. Le 1er if n'est pas utile dans la version mixée'''
 def vid_pla_protegees_autre(carte):
     mes_pla=carte.liste_planetes
     for pla in mes_pla:
         voisines=pla.liste_voisins
         vois_amies=carte.planetes_voisines('amies', pla)
-        if len(voisines)>len(vois_amies):
+        if len(voisines)==len(vois_amies):
             pla_enn=carte.get_planetes_ennemies()
             cout_min, chemin_mieux=carte.chemin_le_moins_couteux(pla.identifiant, pla_enn[0].identifiant) '''Initialisation du chemin le moins couteux'''
             for pl in pla_enn: '''Recherche de la planete ennemie vers laquelle ca coutera moins cher d'expédier les unités''' 
@@ -45,6 +34,26 @@ def vid_pla_protegees_autre(carte):
                 toOrder(carte.id_joueur, 100, chemin_mieux[i-1], chemin_mieux[i)) '''Envoie du départ i-1 à la planete dont on a étudié la situation i'''
         toOrder(carte.id_joueur, 100, chemin_mieux[i-1], chemin_mieux[i)) '''Permet d'envoyer sur la première planète non protégée ou la dernière planète (ennemie) si elles étaient toutes protégées'''
         
+def vid_pla(carte): '''Mix vid_pla_is et vid_pla_protegees autre qui je pense peuvent tout couvrir'''
+    mes_pla=carte.liste_planetes
+    for pla in mes_pla:
+        voisines=pla.liste_voisins
+        vois_amies=carte.planetes_voisines('amies', pla)
+        if len(voisines)==1:'''Vérifie que la planète est isolée'''
+            toOrderMsg(carte.id_joueur, 100, pla.identifiant, voisines[0]
+        elif len(voisines)==len(vois_amies): '''N'effectue les ordres que si la planete n'est entourée que de planètes amies'''
+            pla_enn=carte.get_planetes_ennemies()
+            cout_min, chemin_mieux=carte.chemin_le_moins_couteux(pla.identifiant, pla_enn[0].identifiant) '''Initialisation du chemin le moins couteux'''
+            for pl in pla_enn: '''Recherche de la planete ennemie vers laquelle ca coutera moins cher d'expédier les unités''' 
+                cout, chemin=carte.chemin_le_moins_couteux(pla.identifiant, pl.identifiant)
+                if cout<cout_min:
+                    cout_min=cout
+                    chemin_mieux=chemin '''J'ai considéré que le chemin renvoyer est sous la forme d'une liste d'indentifiant genre: 1__2__3__4__5 Pour aller de 3 à 5 ca renvoie [3,4,5]. J'espère que c'est ça...'''
+            i=1 '''Permet de ne pas étudier 0 qui est la planete d'où partent les unités'''
+            while i< len(chemin_mieux) and carte.get_planete_by(chemin_mieux[i]).getProprietaire(carte)==carte.couleur: '''While car on veut accéder à 2 planetes à la fois de la liste'''
+                if len(carte.get_planete_by(chemin_mieux[i]).liste_voisins)==len(carte.planetes_voisines('amies', carte.get_planete_by(chemin_mieux[i])): '''N'envoie à la planete suivante qui si elle est protégée'''
+                    toOrder(carte.id_joueur, 100, chemin_mieux[i-1], chemin_mieux[i)) '''Envoie du départ i-1 à la planete dont on a étudié la situation i'''
+            toOrder(carte.id_joueur, 100, chemin_mieux[i-1], chemin_mieux[i)) '''Permet d'envoyer sur la première planète non protégée ou la dernière planète (ennemie) si elles étaient toutes protégées'''
 
 def report_unites(carte):
 
