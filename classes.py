@@ -126,11 +126,11 @@ class Carte:
 
 		try:
 			if _type == "t_distances":
-					self.dict_distances = self.graphe_dictionnaire_generator("t_distances")
-					_dict = self.dict_distances
+				self.dict_distances = self.graphe_dictionnaire_generator("t_distances")
+				_dict = self.dict_distances
 			elif _type == "t_unites":
-					self.dict_unites = self.graphe_dictionnaire_generator("t_unites")
-					_dict = self.dict_unites
+				self.dict_unites = self.graphe_dictionnaire_generator("t_unites")
+				_dict = self.dict_unites
 		except ValueError:
 			print("Veillez à bien spécifier le type: t_distances ou t_unites.")
 
@@ -138,6 +138,8 @@ class Carte:
 		# Si on est à l'étape finale, on renvoit la distance et la liste 
 		# des planètes qu'il faut parcourir pour atteindre la planete B.
 		if etape == id_planete_B:
+			#print("POIDS=", distances[id_planete_B])
+			#print("CHEMIN=", self.affiche_peres(pere, id_planete_A, id_planete_B, []))
 			return distances[id_planete_B], self.affiche_peres(pere, id_planete_A, id_planete_B, [])
 
 		# Si la liste des visites est nulle, 
@@ -165,10 +167,10 @@ class Carte:
 		return self.dijskra(_type, noeud_plus_proche, id_planete_B, visites, distances, pere, id_planete_A)
 
 	def plus_court_chemin(self, id_planete_A, id_planete_B):
-			return self.dijskra("t_distances", id_planete_A, id_planete_B, [], {}, {}, id_planete_A)
+		return self.dijskra("t_distances", id_planete_A, id_planete_B, [], {}, {}, id_planete_A)
 
 	def chemin_le_moins_couteux(self, id_planete_A, id_planete_B):
-			return self.dijskra("t_unites", id_planete_A, id_planete_B, [], {}, {}, id_planete_A)
+		return self.dijskra("t_unites", id_planete_A, id_planete_B, [], {}, {}, id_planete_A)
 
 	def planete_moins_defendue(self):
 
@@ -226,9 +228,6 @@ class Carte:
 			if pla == planete:
 				for voisin in pla.liste_voisins:
 					liste.append(voisin[1])
-
-		
-		print("liste voisin", liste)
 			
 		ret = []
 
@@ -255,15 +254,15 @@ class Carte:
 		l_pla_enn = []
 
 		for pla in self.liste_planetes:
-			if pla.getProprietaire(self) != carte.couleur:
+			if pla.getProprietaire(self) != self.couleur:
 				l_pla_enn.append(pla)
 
 		return l_pla_enn
 
 	def mes_planetes(self):
-		mes_planetes=[]
+		mes_planetes = []
 		for planete in self.liste_planetes:
-			if planete.getProprietaire(self)==self.couleur:
+			if planete.getProprietaire(self) == self.couleur:
 				mes_planetes.append(planete)
 		return mes_planetes
 
