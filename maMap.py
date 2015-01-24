@@ -3,7 +3,7 @@ from classes import *
 
 
 def creerPlanete(z,x,y,rayon,color):
-    return z.create_oval(x-(rayon/2),y-(rayon/2),x+(rayon/2),y+(rayon/2),outline=color,fill='black',width=4)
+    return z.create_oval(x-(rayon/4),y-(rayon/4),x+(rayon/4),y+(rayon/4),outline=color,fill='black',width=4)
 
 
 def make_init(carte):
@@ -11,10 +11,10 @@ def make_init(carte):
     leY = 15
     #création des lignes
     for arete in carte.liste_aretes:
-        carte.map.create_line(carte.liste_planetes[arete.extremites[0]].x*50+100,
-                      carte.liste_planetes[arete.extremites[0]].y*50+100,
-                      carte.liste_planetes[arete.extremites[1]].x*50+100,
-                      carte.liste_planetes[arete.extremites[1]].y*50+100,fill='white',width=4)
+        carte.map.create_line(carte.liste_planetes[arete.extremites[0]].x/25+100,
+                      carte.liste_planetes[arete.extremites[0]].y/25+100,
+                      carte.liste_planetes[arete.extremites[1]].x/25+100,
+                      carte.liste_planetes[arete.extremites[1]].y/25+100,fill='white',width=4)
 
         #création des déplacements
         # début = (700,20)
@@ -31,17 +31,17 @@ def make_init(carte):
 
     #création des planetes
     for planete in carte.liste_planetes:
-        planete.contour = creerPlanete(carte.map,planete.x*50+100,planete.y*50+100,planete.rad,"white")
+        planete.contour = creerPlanete(carte.map,planete.x/25+100,planete.y/25+100,planete.rad,"white")
 
         cad = ""
         for i in range(0,planete.cadence_prod):
             cad += "I"
-        carte.map.create_text(planete.x*50+100,planete.y*50+100+15,fill="white",width=100,text=cad)
-        planete.deff = carte.map.create_text(planete.x*50+100,planete.y*50+100,fill="white",width=100,text="0")
-        planete.off  = carte.map.create_text(planete.x*50+100,planete.y*50+100-15,fill="white",width=100,text="0")
+        carte.map.create_text(planete.x/25+100,planete.y/25+100+15,fill="white",width=100,text=cad)
+        planete.deff = carte.map.create_text(planete.x/25+100,planete.y/25+100,fill="white",width=100,text="0")
+        planete.off  = carte.map.create_text(planete.x/25+100,planete.y/25+100-15,fill="white",width=100,text="0")
 
         #identifiant des planetes
-        carte.map.create_text(planete.x*50+100+40,planete.y*50+100+15,fill="white",width=100,text=planete.identifiant)
+        carte.map.create_text(planete.x/25+100+40,planete.y/25+100+15,fill="white",width=100,text=planete.identifiant)
 
     
     
