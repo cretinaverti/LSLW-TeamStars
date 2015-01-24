@@ -80,7 +80,8 @@ def ia(carte):
 			toOrderMsg(carte.id_joueur,100, planete.identifiant, pla_vois[i][1])
 		
 
-		#	report_unites(carte)
+			vid_pla_is(carte)
+			vid_pla_protegees(carte)
 
 
 
