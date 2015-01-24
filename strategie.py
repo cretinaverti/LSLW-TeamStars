@@ -33,7 +33,7 @@ def vid_pla_protegees_autre(carte):
         while i< len(chemin_mieux) and carte.get_planete_by(chemin_mieux[i]).getProprietaire(carte)==carte.couleur: #'''While car on veut accéder à 2 planetes à la fois de la liste'''
             if len(carte.get_planete_by(chemin_mieux[i]).liste_voisins)==len(carte.planetes_voisines('amies', carte.get_planete_by(chemin_mieux[i]))): #'''N'envoie à la planete suivante qui si elle est protégée'''
                 toOrder(carte.id_joueur, 100, chemin_mieux[i-1], chemin_mieux[i]) #'''Envoie du départ i-1 à la planete dont on a étudié la situation i'''
-        toOrder(carte.id_joueur, 100, chemin_mieux[i-1], chemin_mieux[i]) #'''Permet d'envoyer sur la première planète non protégée ou la dernière planète (ennemie) si elles étaient toutes protégées'''
+        toOrderMsg(carte.id_joueur, 100, chemin_mieux[i-1], chemin_mieux[i]) #'''Permet d'envoyer sur la première planète non protégée ou la dernière planète (ennemie) si elles étaient toutes protégées'''
         
 def vid_pla(carte): #'''Mix vid_pla_is et vid_pla_protegees autre qui je pense peuvent tout couvrir'''
     mes_pla=carte.liste_planetes
@@ -76,7 +76,7 @@ def report_unites(carte):
                 l_ennemis_la_plus_proche_1 = l_ennemis_la_plus_proche_2
 
         for destination in l_ennemis_la_plus_proche_1:
-            _, l_pla_vois_enn = carte.planete_voisines('ennemies', carte.get_by_planete(destination))
+            _, l_pla_vois_enn = carte.planete_voisines('ennemies', carte.get_by_planete(destination),carte)
             if l_pla_enn == [] and pla.identifiant != destination:
                 toOrderMsg(carte.id_joueur, 100, pla.identifiant, destination)
 

@@ -13,7 +13,7 @@ class Carte:
 		self.vitesse = 0  #vitesse du serveur
 		self.game_over = False #true si fin du match
 		self.end_of_game = False #true si fin du jeu, on arête tout
-		
+
 		self.dict_distances = {}
 		self.dict_unites = {}
 		
@@ -25,7 +25,7 @@ class Carte:
 	def get_arete_by_extremites(self, arete):
 		for testArete in self.liste_aretes:
 			if (arete.extremites[0] in testArete.extremites and arete.extremites[1] in testArete.extremites):
-				return testArete.ide
+				return testArete
 
 
 	def get_planete_by(self, id_planete):
@@ -41,6 +41,8 @@ class Carte:
 	def flush_moves(self): #vide toutes les arêtes de leurs flottes
 		for arete in self.liste_aretes:
 			arete.flotte_traverse = []
+			for i in (1,4):
+				self.map.itemconfigure(arete.flottes[i],text="")
 
 
 
@@ -228,17 +230,16 @@ class Carte:
 					liste.append(voisin[1])
 
 		
-		print("liste voisin", liste)
 			
 		ret = []
 
 		if s_type == 'amies':
 			for voisin in liste:
-				if self.get_planete_by(voisin).getProprietaire(self) != self.couleur():
+				if self.get_planete_by(voisin).getProprietaire(self) != self.couleur:
 					ret = liste.remove(voisin)
 		elif s_type == 'ennemies':
 			for voisin in liste:
-				if self.get_planete_by(voisin).getProprietaire(self) == self.couleur():
+				if self.get_planete_by(voisin).getProprietaire(self) == self.couleur:
 					ret = liste.remove(voisin)
 		elif s_type == 'neutre':
 			for voisin in liste:
@@ -255,7 +256,7 @@ class Carte:
 		l_pla_enn = []
 
 		for pla in self.liste_planetes:
-			if pla.getProprietaire(self) != carte.couleur:
+			if pla.getProprietaire(self) != self.couleur:
 				l_pla_enn.append(pla)
 
 		return l_pla_enn

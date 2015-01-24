@@ -50,8 +50,11 @@ def init_pooo(init):
 		carte.liste_aretes = []
 		carte.nb_aretes = re.match(".*;(\d+)LINES",init).group(1)
 		aretes = re.split(",",re.match(".*LINES:(.*)",init).group(1))
+		id = 1
 		for i in aretes:
 				a = Arete(0)
+				a.ide = id
+				id += 1
 				a.extremites.append(int(re.match("(\d+)@",i).group(1)))
 				a.extremites.append(int(re.match(".*OF(\d+)",i).group(1)))
 				a.distance = int(re.match(".*@(.*)OF",i).group(1))
