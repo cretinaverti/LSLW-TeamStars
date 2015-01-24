@@ -45,24 +45,23 @@ def watchdog(carte):
 					carte.map.itemconfigure(p.deff,text=p.nb_def)
 
 
-			'''
+			
 			carte.flush_moves() #on vide les flottes sur toutes les aretes
 			
 			# mise à jour des moves
-			for move in moves:
-				arete = carte.get_arete_by_extremites(move)
-				
-			
-			
-			#carte.liste_flottes = moves   # pas encore utilisé
-
-			
-			
 			for new_arete in moves:
-					arete = carte.get_arete_by(new_arete.ide)
-					arete.flotte_traverse = new_arete.flotte_traverse
+				#on rajoute les flottes
+				arete = carte.get_arete_by_extremites(new_arete)
+				arete.flotte_traverse = new_arete.flotte_traverse
+				
+				#on met à jour l'interface graphique
+				i = 1
+				for move in new_arete.flotte_traverse:
+					carte.map.itemconfigure(arete.flottes[i],text="j"+str(move.couleur)+" de "+str(move.nb_unite)+" unites vers "+str(move.destination)+", dist: "+str(move.distance))
 
-			'''
+					
+
+			
 			carte.mutex.release()
 		else:
 			print("ERREUR : message du serveur non reconnu\n\n")
