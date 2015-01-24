@@ -3,29 +3,29 @@ import threading
 class Carte:
 	"""docstring for Carte"""
 	def __init__(self, nb_joueur, id_joueur):
-					self.liste_planetes = [] # liste des planètes de la carte
-					self.liste_aretes = []   # liste des arêtes de la carte
-					# self.liste_flottes = [] #liste des flottes en mouvement, pas encore utilisé
-					self.id_joueur = id_joueur#id de notre joueur (uid de register_pooo)
-					self.nb_joueur = nb_joueur #nombre de joueurs du match
-					self.couleur = 0  # la couleur de notre joueur
-					self.match_id = 0 # id du match
-					self.vitesse = 0  #vitesse du serveur
-					self.game_over = False #true si fin du match
-					self.end_of_game = False #true si fin du jeu, on arête tout
-					
-					self.dict_distances = {}
-					self.dict_unites = {}
-					
+		self.liste_planetes = [] # liste des planètes de la carte
+		self.liste_aretes = []   # liste des arêtes de la carte
+		# self.liste_flottes = [] #liste des flottes en mouvement, pas encore utilisé
+		self.id_joueur = id_joueur#id de notre joueur (uid de register_pooo)
+		self.nb_joueur = nb_joueur #nombre de joueurs du match
+		self.couleur = 0  # la couleur de notre joueur
+		self.match_id = 0 # id du match
+		self.vitesse = 0  #vitesse du serveur
+		self.game_over = False #true si fin du match
+		self.end_of_game = False #true si fin du jeu, on arête tout
+		
+		self.dict_distances = {}
+		self.dict_unites = {}
+		
 
-					self.map = None # canevas de l'interface graphique
-					self.threads = [] #tableau des threads
-					self.mutex = threading.Lock() #exclusion mutuelle des attributs modifiés par le state
+		self.map = None # canevas de l'interface graphique
+		self.threads = [] #tableau des threads
+		self.mutex = threading.Lock() #exclusion mutuelle des attributs modifiés par le state
 
 	def get_arete_by_extremites(self, arete):
-                for testArete in self.liste_aretes:
-                        if (arete.extremites[0] in testArete.extremites and arete.extremites[1] in testArete.extremites):
-                                return testArete.ide
+		for testArete in self.liste_aretes:
+			if (arete.extremites[0] in testArete.extremites and arete.extremites[1] in testArete.extremites):
+				return testArete.ide
 
 
 	def get_planete_by(self, id_planete):
@@ -47,122 +47,122 @@ class Carte:
 
 
 	def graphe_dictionnaire_generator(self, _type):
-			'''
-			Renvoie un dictionnaire de la forme suivantes:
-					Si _type = "t_distances": {id_planete_A: {id_voisin_de_A_1: poids_de_l'arete, id_voisin_de_A_2: poids_de_l'arete, ...}, id_planete_B: ... }
-					Si _type = "t_unites": {id_planete_A: {id_voisin_de_A_1: nb_off+nb_def, id_voisin_de_A_2: nb_off+nb_def, ...}, id_planete_B: ... }
-			'''
-			liste_ide_planetes = []
-			liste_ide_voisins = []
-			liste_poids = []
+		'''
+		Renvoie un dictionnaire de la forme suivantes:
+				Si _type = "t_distances": {id_planete_A: {id_voisin_de_A_1: poids_de_l'arete, id_voisin_de_A_2: poids_de_l'arete, ...}, id_planete_B: ... }
+				Si _type = "t_unites": {id_planete_A: {id_voisin_de_A_1: nb_off+nb_def, id_voisin_de_A_2: nb_off+nb_def, ...}, id_planete_B: ... }
+		'''
+		liste_ide_planetes = []
+		liste_ide_voisins = []
+		liste_poids = []
 
 
-			# Pour chaque planètes...
-			for planete in self.liste_planetes:
+		# Pour chaque planètes...
+		for planete in self.liste_planetes:
 
-					# On ajoute à liste_ide_planetes l'identifiant de la planète;
-					liste_ide_planetes.append(planete.identifiant)
-					
-					# on ajoute les voisins de la la planète courante;
-					_liste_ide_voisins = []
+				# On ajoute à liste_ide_planetes l'identifiant de la planète;
+				liste_ide_planetes.append(planete.identifiant)
+				
+				# on ajoute les voisins de la la planète courante;
+				_liste_ide_voisins = []
 
-					for voisin in planete.liste_voisins:
-							_liste_ide_voisins.append(voisin[1])
-							
-					# on créer une liste de liste de voisins.
-					liste_ide_voisins.append(_liste_ide_voisins)
+				for voisin in planete.liste_voisins:
+						_liste_ide_voisins.append(voisin[1])
+						
+				# on créer une liste de liste de voisins.
+				liste_ide_voisins.append(_liste_ide_voisins)
 
-					_liste_poids = []
-					# Cas ou l'on veut la distance.
-					if _type == "t_distances":
-							for voisin in planete.liste_voisins:
-									_liste_poids.append(voisin[0])
+				_liste_poids = []
+				# Cas ou l'on veut la distance.
+				if _type == "t_distances":
+						for voisin in planete.liste_voisins:
+								_liste_poids.append(voisin[0])
 
-					# Cas ou l'on veut la somme des unités défensive et offensive.
-					elif _type == "t_unites":
-							for voisin in planete.liste_voisins:
-								_liste_poids.append(self.get_planete_by(voisin[1]).getNb_def(self) + self.get_planete_by(voisin[1]).getNb_off(self))
+				# Cas ou l'on veut la somme des unités défensive et offensive.
+				elif _type == "t_unites":
+						for voisin in planete.liste_voisins:
+							_liste_poids.append(self.get_planete_by(voisin[1]).getNb_def(self) + self.get_planete_by(voisin[1]).getNb_off(self))
 
-					liste_poids.append(_liste_poids)
-			
+				liste_poids.append(_liste_poids)
+		
 
-			l_dic_p = []
-			for i in range(len(liste_poids)):
-					l_dic_p.append( dict( zip(liste_ide_voisins[i], liste_poids[i]) ) )
-					
+		l_dic_p = []
+		for i in range(len(liste_poids)):
+				l_dic_p.append( dict( zip(liste_ide_voisins[i], liste_poids[i]) ) )
+				
 
-			return dict( zip(liste_ide_planetes, l_dic_p) ) # Mettre "yield" si l'on veut un générateur (~ itérateur).
+		return dict( zip(liste_ide_planetes, l_dic_p) ) # Mettre "yield" si l'on veut un générateur (~ itérateur).
 
 
 	def extremites(self):
-					extremites = []
+		extremites = []
 
-					for planete in self.getListe_planetes:
-									if len(planete.getListe_voisins) == 1:
-													extremites.append(planete)
-					return extremites
+		for planete in self.getListe_planetes:
+						if len(planete.getListe_voisins) == 1:
+										extremites.append(planete)
+		return extremites
 
 
 
 	# Fonctions servant à implémenter l'agorithme de Dijskra.
 	def affiche_peres(self, pere, id_planete_A, extremite, trajet):
-			
-			if extremite == id_planete_A:
-					return [id_planete_A] + trajet
-			else:
-					return self.affiche_peres(pere, id_planete_A, pere[extremite], [extremite] + trajet)
+		
+		if extremite == id_planete_A:
+				return [id_planete_A] + trajet
+		else:
+				return self.affiche_peres(pere, id_planete_A, pere[extremite], [extremite] + trajet)
 
 	def dijskra(self, _type, etape, id_planete_B, visites, distances, pere, id_planete_A):
-			'''
-			On va utiliser l'algorithme de Dijskra: on calcule la distance minimale entre la planète en argument et une autre planète.
-			_type 			: chaine de caractère précisant le type de dictionnaire que doit utiliser l'algorithme de Dijskra. 
-			etape			: entier correpondant à l'id de la planète en cours d'étude.
-			id_planete_B	: entier.
-			visites			: listes des planetes déjà examinées.
-			distances		: dictionnaire.
-			pere			: dictionnaire.
-			id_planete_A	: entier.
-			'''
+		'''
+		On va utiliser l'algorithme de Dijskra: on calcule la distance minimale entre la planète en argument et une autre planète.
+		_type 			: chaine de caractère précisant le type de dictionnaire que doit utiliser l'algorithme de Dijskra. 
+		etape			: entier correpondant à l'id de la planète en cours d'étude.
+		id_planete_B	: entier.
+		visites			: listes des planetes déjà examinées.
+		distances		: dictionnaire.
+		pere			: dictionnaire.
+		id_planete_A	: entier.
+		'''
 
-			try:
-					if _type == "t_distances":
-							self.dict_distances = self.graphe_dictionnaire_generator("t_distances")
-							_dict = self.dict_distances
-					elif _type == "t_unites":
-							self.dict_unites = self.graphe_dictionnaire_generator("t_unites")
-							_dict = self.dict_unites
-			except ValueError:
-					print("Veillez à bien spécifier le type: t_distances ou t_unites.")
+		try:
+				if _type == "t_distances":
+						self.dict_distances = self.graphe_dictionnaire_generator("t_distances")
+						_dict = self.dict_distances
+				elif _type == "t_unites":
+						self.dict_unites = self.graphe_dictionnaire_generator("t_unites")
+						_dict = self.dict_unites
+		except ValueError:
+				print("Veillez à bien spécifier le type: t_distances ou t_unites.")
 
 
-			# Si on est à l'étape finale, on renvoit la distance et la liste 
-			# des planètes qu'il faut parcourir pour atteindre la planete B.
-			if etape == id_planete_B:
-					return distances[id_planete_B], self.affiche_peres(pere, id_planete_A, id_planete_B, [])
+		# Si on est à l'étape finale, on renvoit la distance et la liste 
+		# des planètes qu'il faut parcourir pour atteindre la planete B.
+		if etape == id_planete_B:
+				return distances[id_planete_B], self.affiche_peres(pere, id_planete_A, id_planete_B, [])
 
-			# Si la liste des visites est nulle, 
-			# on commence l'algorithme en initialisant la distance à 0.
-			if len(visites) == 0:
-					distances[etape] = 0
+		# Si la liste des visites est nulle, 
+		# on commence l'algorithme en initialisant la distance à 0.
+		if len(visites) == 0:
+				distances[etape] = 0
 
-			# On regarde les voisins de notre planète (étape).
-			for voisin in _dict[etape]:
+		# On regarde les voisins de notre planète (étape).
+		for voisin in _dict[etape]:
 
-					# Si on ne l'a pas visitée...
-					if voisin not in visites:
-							dist_voisin = distances.get(voisin, float('inf'))
-							candidat_dist = distances[etape] + _dict[etape][voisin]
+				# Si on ne l'a pas visitée...
+				if voisin not in visites:
+						dist_voisin = distances.get(voisin, float('inf'))
+						candidat_dist = distances[etape] + _dict[etape][voisin]
 
-							if candidat_dist < dist_voisin:
-									distances[voisin] = candidat_dist
-									pere[voisin] = etape
+						if candidat_dist < dist_voisin:
+								distances[voisin] = candidat_dist
+								pere[voisin] = etape
 
-			visites.append(etape)
-			
-			non_visites = dict((s, distances.get(s, float('inf'))) for s in _dict if s not in visites)
-			noeud_plus_proche = min(non_visites, key = non_visites.get)
+		visites.append(etape)
+		
+		non_visites = dict((s, distances.get(s, float('inf'))) for s in _dict if s not in visites)
+		noeud_plus_proche = min(non_visites, key = non_visites.get)
 
-			return self.dijskra(_type, noeud_plus_proche, id_planete_B, visites, distances, pere, id_planete_A)
+		return self.dijskra(_type, noeud_plus_proche, id_planete_B, visites, distances, pere, id_planete_A)
 
 	def plus_court_chemin(self, id_planete_A, id_planete_B):
 			return self.dijskra("t_distances", id_planete_A, id_planete_B, [], {}, {}, id_planete_A)
@@ -172,15 +172,15 @@ class Carte:
 
 	def planete_moins_defendue(self):
 
-					mini = self.mes_planetes()[0].getNb_def(self) + self.mes_planetes()[0].getNb_off(self)
-					ret_pla = self.mes_planetes()[0]
+		mini = self.mes_planetes()[0].getNb_def(self) + self.mes_planetes()[0].getNb_off(self)
+		ret_pla = self.mes_planetes()[0]
 
-					for planete in self.mes_planetes():
-									if (planete.getNb_def(self) + planete.getNb_off(self) < mini) and not(planete.entouree_amis()):
-													ret_pla = planete
-													mini = planete.getNb_def(self) + planete.getNb_off(self)
+		for planete in self.mes_planetes():
+						if (planete.getNb_def(self) + planete.getNb_off(self) < mini) and not(planete.entouree_amis()):
+										ret_pla = planete
+										mini = planete.getNb_def(self) + planete.getNb_off(self)
 
-					return ret_pla
+		return ret_pla
 
 
 	def planetes_productrices(self):
@@ -226,20 +226,23 @@ class Carte:
 			if pla == planete:
 				for voisin in pla.liste_voisins:
 					liste.append(voisin[1])
+
+		
+		print("liste voisin", liste)
 			
 		ret = []
 
 		if s_type == 'amies':
 			for voisin in liste:
-				if self.get_planete_by(voisin).getProprietaire(carte) != self.couleur():
+				if self.get_planete_by(voisin).getProprietaire(self) != self.couleur():
 					ret = liste.remove(voisin)
 		elif s_type == 'ennemies':
 			for voisin in liste:
-				if self.get_planete_by(voisin).getProprietaire(carte) == self.couleur():
+				if self.get_planete_by(voisin).getProprietaire(self) == self.couleur():
 					ret = liste.remove(voisin)
 		elif s_type == 'neutre':
 			for voisin in liste:
-				if self.get_planete_by(voisin).getProprietaire(carte) != -1:
+				if self.get_planete_by(voisin).getProprietaire(self) != -1:
 					ret = liste.remove(voisin)
 		elif s_type == 'toutes':
 			ret = liste
@@ -341,20 +344,20 @@ class Planete:
 					return (self.getUnit_max_off+self.getUnit_max_def)
 
 	def voisin_ennemi_moins_defendu(self, couleur):
-					nb=self.getListe_voisins[0].defense_actuelle()
-					planete=self.getListe_voisins[0]
-					for i in self.getListe_voisins:
-									nbr=self.getListe_voisins[i].defense_actuelle()
-									if i.proprietaire!=couleur and nb>nbr:
-													nb=nbr
-													planete=i
-					return planete
+			nb=self.getListe_voisins[0].defense_actuelle()
+			planete=self.getListe_voisins[0]
+			for i in self.getListe_voisins:
+							nbr=self.getListe_voisins[i].defense_actuelle()
+							if i.proprietaire!=couleur and nb>nbr:
+											nb=nbr
+											planete=i
+			return planete
 	def pourcentage_a_expedier(self,but):
-					'''La moitié de ce qu'il a en plus'''
-					if self.defense_actuelle_planete()<but.defense_actuelle_planete():
-									return 0
-					else:
-									return(self.defense_actuelle_planete()-but.defense_actuelle_planete())/2                                    
+		'''La moitié de ce qu'il a en plus'''
+		if self.defense_actuelle_planete()<but.defense_actuelle_planete():
+			return 0
+		else:
+			return(self.defense_actuelle_planete()-but.defense_actuelle_planete())/2             
 
 
 																																	 
@@ -362,13 +365,13 @@ class Planete:
 class Arete:
 	"""docstring for Arete"""
 	def __init__(self, distance, ide = None):
-				self.ide = ide
-				self.flotte_traverse = []
-				self.distance = distance
-				self.extremites = []
+		self.ide = ide
+		self.flotte_traverse = []
+		self.distance = distance
+		self.extremites = []
 
-				#données pour les déplacements sur l'interface graphique
-				self.flottes = []
+		#données pour les déplacements sur l'interface graphique
+		self.flottes = []
 
 	def getFlotte_traverse(self,carte):
 		carte.mutex.acquire()
@@ -387,9 +390,9 @@ class Arete:
 class Flotte:
 	"""docstring for Flotte"""
 	def __init__(self, nb_unite, couleur, direction):       
-					self.nb_unite = nb_unite
-					self.couleur = couleur
-					self.destination = direction
-					self.distance = 0
+		self.nb_unite = nb_unite
+		self.couleur = couleur
+		self.destination = direction
+		self.distance = 0
 
-					self.position_courante = 0
+		self.position_courante = 0
