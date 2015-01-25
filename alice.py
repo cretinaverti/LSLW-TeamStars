@@ -76,20 +76,16 @@ def ia(carte):
 	a,b = carte.plus_court_chemin(0,len(carte.liste_planetes)-1)
 	print("a : ",a)
 	print("b : ",b)'''
-	while (not (carte.game_over or carte.end_of_game)):        #mise en place des stratégies et du robot
+	while (not (carte.game_over or carte.end_of_game)): #mise en place des stratégies et du robot
 		mes_planetes=carte.mes_planetes()
 		for planete in mes_planetes:
-				#conquete_planete_solitaire_proche(carte, planete)
-
-			
+		#conquete_planete_solitaire_proche(carte, planete)
 			pla_vois=planete.liste_voisins
-			i=0			
+			i=0	
 			while i<len(pla_vois) and carte.get_planete_by(pla_vois[i][1]).getProprietaire(carte)==carte.couleur:
 				i+=1
-			toOrderMsg(carte.id_joueur,100, planete.identifiant, pla_vois[i][1])
-		
-
-			vid_pla_is(carte)
-			vid_pla_protegees_autre(carte)
-			'''Si ces deux fonctions marchent, tenter de les remplacer par la fonction vid_pla, la même mais en une seule fonction'''
-
+			if i<len(pla_vois):
+				toOrderMsg(carte.id_joueur,100, planete.identifiant, pla_vois[i][1])
+			else:
+				if len(pla_vois)==1:
+					toOrderMsg(carte.id_joueur, 100, planete.identifiant, pla_vois[0][1])
