@@ -70,34 +70,35 @@ def watchdog(carte):
 
 
 def ia(carte):
+	print("ICIIIIIIIIIIIIIIIIII")
 	carte.dict_distances = carte.graphe_dictionnaire_generator("t_distances")
-	
+	print(carte.dict_distances)
+	a,b = carte.plus_court_chemin(0,len(carte.liste_planetes)-1)
+	print("a : ",a)
+	print("b : ",b)
 	while (not (carte.game_over or carte.end_of_game)): #mise en place des stratégies et du robot
 		mes_planetes=carte.mes_planetes()
 		for planete in mes_planetes:
-		#On étudie toutes nos planètes
+		#conquete_planete_solitaire_proche(carte, planete)
 			pla_vois=planete.liste_voisins
-			'''Vide nos planetes isolées'''
 			if len(pla_vois)==1:
 				toOrderMsg(carte.id_joueur, 100, planete.identifiant, pla_vois[0][1])
-			i=0
-			'''Du while au else(non-compris): attaque le premier voisin ennemi rencontré''' 
+			i=0	
 			while i<len(pla_vois) and carte.get_planete_by(pla_vois[i][1]).getProprietaire(carte)==carte.couleur:
 				i+=1
 			if i<len(pla_vois):
 				j=0
 				toOrderMsg(carte.id_joueur,100, planete.identifiant, pla_vois[i][1])				
-			# S'il n' y a pas d'ennemi à proximité, chercher la planete ennemie la plus proche.
+				
 			else:
 				pla_enn=carte.get_planetes_ennemies()
 				u=0
-				dist0, chemin0=carte.chemin_le_moins_couteux(planete.identifiant, pla_enn[0].identifiant)
+				dist0, chemin0=carte.plus_court_chemin(planete.identifiant, pla_enn[0].identifiant)
 				while u<len(pla_enn):
-					dist, chemin=carte.chemin_le_moins_couteux(planete.identifiant, pla_enn[u].identifiant) 
+					dist, chemin=carte.plus_court_chemin(planete.identifiant, pla_enn[u].identifiant) 
+					
 					if dist<dist0:
 						dist0=dist
 						chemin0=chemin0
 					u+=1
-				'''On ne s'intéresse qu'au premier déplacement ici puisque le second finira par se faire
-				lors d'un autre tour(pas optimisé :('''
 				toOrderMsg(carte.id_joueur, 100, chemin0[0], chemin0[1]) 
